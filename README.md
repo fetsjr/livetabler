@@ -14,7 +14,7 @@ A collection of **Tabler UI** Blade components for **Laravel Livewire**, inspire
 Install the package via Composer:
 
 ```bash
-composer require local/tabler-ui
+composer require fetsjr/livetabler
 ```
 
 The service provider is auto-discovered via Laravel's package discovery.

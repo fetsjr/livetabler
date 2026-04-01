@@ -1,5 +1,5 @@
 {
-    "name": "local/tabler-ui",
+    "name": "fetsjr/livetabler",
     "description": "Tabler UI components for Livewire, inspired by Flux.",
     "keywords": ["tabler", "laravel", "livewire", "components", "ui"],
     "license": "MIT",
