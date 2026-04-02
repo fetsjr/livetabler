@@ -7,30 +7,19 @@ use Illuminate\Support\Facades\Blade;
 
 class TablerServiceProvider extends ServiceProvider
 {
-    /**
-     * Boot the service provider.
-     */
     public function boot(): void
     {
-        // 1. Cargamos el namespace de vistas para usar @include('tabler::...') si fuera necesario
-        if (is_dir(__DIR__.'/../stubs/resources/views/tabler')) {
-            $this->loadViewsFrom(__DIR__.'/../stubs/resources/views/tabler', 'tabler');
-        }
+        $this->loadViewsFrom(__DIR__.'/../stubs/resources/views/tabler', 'tabler');
 
-        // 2. Registramos los componentes bajo el namespace 'tabler'
-        $this->bootComponentPath();
-    }
-
-    /**
-     * Registrar componentes anónimos bajo el namespace 'tabler'.
-     */
-    public function bootComponentPath(): void
-    {
-        // Este es el método estándar de Laravel para <x-tabler::...>
-        Blade::anonymousComponentPath(__DIR__.'/../stubs/resources/views/tabler', 'tabler');
+        // Registro de componentes con el prefijo tabler:
+        // Registramos manualmente los principales para asegurar que el ":" funcione
+        Blade::component('tabler::accordion.index', 'tabler:accordion');
+        Blade::component('tabler::accordion.item', 'tabler:accordion.item');
+        Blade::component('tabler::accordion.heading', 'tabler:accordion.heading');
+        Blade::component('tabler::accordion.content', 'tabler:accordion.content');
         
-        // IMPORTANTE: Esto es lo que permite usar los dos puntos <tabler:accordion>
-        Blade::componentNamespace('Tabler\\stubs\\resources\\views\\tabler', 'tabler');
+        // También registramos el path por si acaso para componentes futuros
+        Blade::anonymousComponentPath(__DIR__.'/../stubs/resources/views/tabler', 'tabler');
     }
 
     public function register(): void
