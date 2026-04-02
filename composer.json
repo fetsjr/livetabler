@@ -12,7 +12,10 @@
     "autoload": {
         "psr-4": {
             "Tabler\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "extra": {
         "laravel": {
