@@ -18,7 +18,7 @@
 if ($name && ! $initials) {
     $parts = explode(' ', trim($name));
 
-    if ($attributes->pluck('initials:single')) {
+    if ($attributes->has('initials:single')) {
         $initials = strtoupper(mb_substr($parts[0], 0, 1));
     } else {
         $parts = collect($parts)->filter()->values()->all();
@@ -45,7 +45,7 @@ if (! $hasTextContent && ! $src) {
 $colors = ['red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'pink'];
 
 if ($hasTextContent && $color === 'auto') {
-    $colorSeed = $attributes->pluck('color:seed') ?? $name ?? $icon ?? $initials ?? $slot;
+    $colorSeed = $attributes->get('color:seed') ?? $name ?? $icon ?? $initials ?? $slot;
     $hash = crc32((string) $colorSeed);
     $color = $colors[$hash % count($colors)];
 }
