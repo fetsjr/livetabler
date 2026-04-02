@@ -4,39 +4,38 @@ namespace Tabler;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\View\Compilers\BladeCompiler;
 
 class TablerServiceProvider extends ServiceProvider
 {
-    /**
-     * Boot the service provider.
-     */
     public function boot(): void
     {
         $path = realpath(__DIR__.'/../stubs/resources/views/tabler');
 
         if ($path) {
-            // 1. Cargamos las vistas para acceder a ellas vía tabler::
             $this->loadViewsFrom($path, 'tabler');
-
-            // 2. Registramos los componentes anónimos bajo el namespace 'tabler'
+            
+            // Registro Estándar
             Blade::anonymousComponentPath($path, 'tabler');
-        }
 
-        // 3. REGISTRO DEL PRE-COMPILADOR (Inspirado en la lógica de Flux)
-        // Esto traduce <tabler:...> a <x-tabler::...> antes de que Laravel lo procese
-        $this->app->afterResolving('blade.compiler', function (BladeCompiler $blade) {
-            $blade->precompiler(function ($string) {
-                return preg_replace_callback('/<\/?tabler:([a-z0-9\-\.]+)/i', function ($matches) {
-                    return str_replace('tabler:', 'x-tabler::', $matches[0]);
-                }, $string);
-            });
-        });
+            // REGISTRO DE ALIAS PARA SOPORTAR <tabler:...>
+            $this->registerAliases();
+        }
     }
 
-    /**
-     * Register the service provider.
-     */
+    protected function registerAliases()
+    {
+        // Mapeo manual de etiquetas tabler: a las vistas del paquete
+        Blade::component('tabler::accordion.index', 'tabler:accordion');
+        Blade::component('tabler::accordion.item', 'tabler:accordion.item');
+        Blade::component('tabler::accordion.heading', 'tabler:accordion.heading');
+        Blade::component('tabler::accordion.content', 'tabler:accordion.content');
+        
+        // Agregamos otros comunes
+        Blade::component('tabler::button.index', 'tabler:button');
+        Blade::component('tabler::input.index', 'tabler:input');
+        Blade::component('tabler::badge.index', 'tabler:badge');
+    }
+
     public function register(): void
     {
         //
