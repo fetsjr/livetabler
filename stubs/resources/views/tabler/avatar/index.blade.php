@@ -53,15 +53,17 @@ if ($hasTextContent && $color === 'auto') {
 $sizeClasses = match($size) {
     'xl' => 'size-16 text-xl',
     'lg' => 'size-12 text-lg',
-    'md', default => 'size-10 text-base',
+    'md' => 'size-10 text-base',
     'sm' => 'size-8 text-sm',
     'xs' => 'size-6 text-xs',
+    default => 'size-10 text-base',
 };
 
 $roundingClasses = $circle ? 'rounded-full' : match($size) {
     'xl', 'lg' => 'rounded-xl',
-    'md', 'sm', default => 'rounded-lg',
+    'md', 'sm' => 'rounded-lg',
     'xs' => 'rounded-md',
+    default => 'rounded-lg',
 };
 
 // Tabler specific colors
@@ -93,14 +95,17 @@ $badgeClasses = "absolute rounded-full ring-2 ring-white dark:ring-zinc-900 " . 
     'green' => 'bg-green-500',
     'yellow' => 'bg-yellow-500',
     'blue' => 'bg-blue-500',
-    'gray', default => 'bg-gray-400',
+    'gray' => 'bg-gray-400',
+    default => 'bg-gray-400',
 } . " " . match($badgePosition) {
     'top-right' => 'top-0 right-0 -translate-y-1/4 translate-x-1/4',
-    'bottom-right', default => 'bottom-0 right-0 translate-y-1/4 translate-x-1/4',
+    'bottom-right' => 'bottom-0 right-0 translate-y-1/4 translate-x-1/4',
+    default => 'bottom-0 right-0 translate-y-1/4 translate-x-1/4',
 } . " " . match($size) {
     'xl', 'lg' => 'size-3.5',
-    'md', 'sm', default => 'size-2.5',
+    'md', 'sm' => 'size-2.5',
     'xs' => 'size-2',
+    default => 'size-2.5',
 };
 
 $label = $alt ?? $name;

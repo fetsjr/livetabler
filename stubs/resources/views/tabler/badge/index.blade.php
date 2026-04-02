@@ -12,7 +12,8 @@ $baseClasses = "inline-flex items-center font-semibold leading-none";
 
 $sizeClasses = match($size) {
     'sm' => 'px-1.5 py-0.5 text-[0.65rem]',
-    'md', default => 'px-2 py-1 text-xs',
+    'md' => 'px-2 py-1 text-xs',
+    default => 'px-2 py-1 text-xs',
 };
 
 $roundedClasses = $rounded ? 'rounded-full' : 'rounded-md';

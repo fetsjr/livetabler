@@ -33,7 +33,8 @@
         'xs' => "h-6 text-xs rounded {$alignClasses} " . ($square ? 'w-6' : 'px-2'),
         'sm' => "h-8 text-sm rounded-md {$alignClasses} " . ($square ? 'w-8' : 'px-3'),
         'lg' => "h-12 text-lg rounded-md {$alignClasses} " . ($square ? 'w-12' : 'px-5'),
-        'base', 'md', default => "h-10 text-sm rounded-md {$alignClasses} " . ($square ? 'w-10' : 'px-4'),
+        'base', 'md' => "h-10 text-sm rounded-md {$alignClasses} " . ($square ? 'w-10' : 'px-4'),
+        default => "h-10 text-sm rounded-md {$alignClasses} " . ($square ? 'w-10' : 'px-4'),
     };
 
     // Color definitions for standard Tabler
