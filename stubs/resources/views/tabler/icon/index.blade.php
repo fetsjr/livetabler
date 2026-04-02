@@ -12,7 +12,7 @@
 @endphp
 
 <svg {{ $attributes->merge(['class' => "inline-block text-current {$class}"]) }} viewBox="0 0 24 24" fill="@if($variant === 'outline') none @else currentColor @endif" stroke="@if($variant === 'outline') currentColor @else none @endif" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    @if(slot->isEmpty())
+    @if($slot->isEmpty())
         <!-- Default fallback generic circle if no icon paths provided in slot -->
         <circle cx="12" cy="12" r="10"></circle>
     @else
