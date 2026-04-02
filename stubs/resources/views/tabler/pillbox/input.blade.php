@@ -4,9 +4,7 @@
 ])
 
 @php
-$classes = Flux::classes()
-    ->add('min-w-12 shrink flex-1 outline-none ms-1')
-    ->add('placeholder-zinc-400 dark:placeholder-zinc-400 disabled:placeholder-zinc-400/70 dark:disabled:placeholder-zinc-500');
+$classes = 'min-w-12 shrink flex-1 outline-none ms-1 placeholder-zinc-400 dark:placeholder-zinc-400 disabled:placeholder-zinc-400/70 dark:disabled:placeholder-zinc-500';
 
 $name = $attributes->whereStartsWith('wire:model')->first();
 $invalid ??= ($name && $errors->has($name));

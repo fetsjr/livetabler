@@ -6,8 +6,7 @@
 ])
 
 @php
-$classes = Flux::classes()
-    ->add('p-2 flex flex-col');
+$classes = 'p-2 flex flex-col';
 @endphp
 
 <div {{ $attributes->class($classes) }} data-flux-kanban-column-header>

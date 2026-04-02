@@ -6,13 +6,7 @@
 ])
 
 @php
-$classes = Flux::classes()
-    ->add('h-10 w-full flex items-center px-3 py-2')
-    ->add('font-medium text-base sm:text-sm text-zinc-800 dark:text-white')
-    ->add('ps-9 pe-9')
-    ->add('outline-hidden')
-    ->add('border-b border-zinc-200 dark:border-zinc-600')
-    ->add('bg-white dark:bg-zinc-700');
+$classes = 'h-10 w-full flex items-center px-3 py-2 font-medium text-base sm:text-sm text-zinc-800 dark:text-white ps-9 pe-9 outline-hidden border-b border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700';
 @endphp
 
 <div class="relative flex grow" data-flux-select-search>

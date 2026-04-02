@@ -5,10 +5,7 @@
 ])
 
 @php
-$classes = Flux::classes()
-    ->add('overflow-hidden flex gap-2 text-start flex-1')
-    ->add('text-zinc-700 dark:text-zinc-300')
-    ->add('truncate');
+$classes = 'overflow-hidden flex gap-2 text-start flex-1 text-zinc-700 dark:text-zinc-300 truncate';
 @endphp
 
 <span {{ $attributes->class($classes) }} data-flux-select-selected>

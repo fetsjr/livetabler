@@ -5,15 +5,11 @@
 ])
 
 @php
-$classes = Flux::classes()
-    ->add('w-full bg-transparent outline-none')
-    ->add(match($size ?? null) {
+$sizeClasses = match($size ?? null) {
         'sm' => 'h-8 text-sm rounded-md px-3',
         default => 'h-10 text-base sm:text-sm rounded-lg px-3',
-    })
-    ->add('border border-zinc-200 dark:border-zinc-600')
-    ->add('shadow-xs bg-white dark:bg-white/10')
-    ->add('placeholder-zinc-400 dark:placeholder-zinc-400');
+    };
+    $classes = "w-full bg-transparent outline-none {$sizeClasses} border border-zinc-200 dark:border-zinc-600 shadow-xs bg-white dark:bg-white/10 placeholder-zinc-400 dark:placeholder-zinc-400";
 @endphp
 
 <div class="relative w-full">

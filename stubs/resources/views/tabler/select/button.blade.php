@@ -8,17 +8,12 @@
 ])
 
 @php
-$classes = Flux::classes()
-    ->add('group/select-button cursor-default')
-    ->add('overflow-hidden flex items-center shadow-xs')
-    ->add('bg-white dark:bg-white/10')
-    ->add(match($size ?? null) {
+$sizeClasses = match($size ?? null) {
         'sm' => 'h-8 text-sm rounded-md ps-3 pe-8',
         'xs' => 'h-6 text-xs rounded ps-2 pe-6',
         default => 'h-10 text-base sm:text-sm rounded-lg ps-3 pe-10',
-    })
-    ->add('border border-zinc-200 dark:border-zinc-600')
-    ->add('w-full text-start');
+    };
+    $classes = "group/select-button cursor-default overflow-hidden flex items-center shadow-xs bg-white dark:bg-white/10 {$sizeClasses} border border-zinc-200 dark:border-zinc-600 w-full text-start";
 
 $name = $attributes->whereStartsWith('wire:model')->first();
 $invalid ??= ($name && $errors->has($name));

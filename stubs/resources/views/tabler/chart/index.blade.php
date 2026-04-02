@@ -6,7 +6,7 @@
 ])
 
 @php
-$classes = Flux::classes('block relative');
+$classes = 'block relative';
 $value = is_array($value) ? \Illuminate\Support\Js::encode($value) : $value;
 @endphp
 

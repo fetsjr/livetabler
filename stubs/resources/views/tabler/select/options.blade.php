@@ -5,11 +5,7 @@
 ])
 
 @php
-$classes = Flux::classes()
-    ->add('min-w-48 max-h-[14rem] p-[.3125rem] scroll-py-[.3125rem]')
-    ->add('rounded-lg shadow-xs')
-    ->add('border border-zinc-200 dark:border-zinc-600')
-    ->add('bg-white dark:bg-zinc-700');
+$classes = 'min-w-48 max-h-[14rem] p-[.3125rem] scroll-py-[.3125rem] rounded-lg shadow-xs border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700';
 @endphp
 
 @if (! $searchable)

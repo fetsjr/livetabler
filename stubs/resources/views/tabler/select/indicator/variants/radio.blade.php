@@ -1,9 +1,5 @@
 @php
-$classes = Flux::classes()
-    ->add('h-4 w-4 shrink-0 rounded-full')
-    ->add('border border-zinc-300 dark:border-zinc-500')
-    ->add('[ui-option[data-selected]_&]:border-zinc-800 dark:[ui-option[data-selected]_&]:border-white')
-    ->add('flex items-center justify-center');
+$classes = 'h-4 w-4 shrink-0 rounded-full border border-zinc-300 dark:border-zinc-500 [ui-option[data-selected]_&]:border-zinc-800 dark:[ui-option[data-selected]_&]:border-white flex items-center justify-center';
 @endphp
 
 <span {{ $attributes->class($classes) }}>
