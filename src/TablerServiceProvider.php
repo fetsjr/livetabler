@@ -9,17 +9,19 @@ class TablerServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        // 1. Cargamos las vistas del paquete
         $this->loadViewsFrom(__DIR__.'/../stubs/resources/views/tabler', 'tabler');
 
-        // Registro de componentes con el prefijo tabler:
-        // Registramos manualmente los principales para asegurar que el ":" funcione
-        Blade::component('tabler::accordion.index', 'tabler:accordion');
-        Blade::component('tabler::accordion.item', 'tabler:accordion.item');
-        Blade::component('tabler::accordion.heading', 'tabler:accordion.heading');
-        Blade::component('tabler::accordion.content', 'tabler:accordion.content');
-        
-        // También registramos el path por si acaso para componentes futuros
+        // 2. Registramos el path de componentes anónimos
         Blade::anonymousComponentPath(__DIR__.'/../stubs/resources/views/tabler', 'tabler');
+
+        // 3. REGISTRO DEL PRE-COMPILADOR (Estilo Flux)
+        // Esto traduce <tabler:xxx> a <x-tabler::xxx> antes de que Laravel lo procese
+        Blade::precompiler(function ($value) {
+            return preg_replace_callback('/<\/?tabler:([a-z0-9\-\.\:]+)/', function ($matches) {
+                return str_replace('tabler:', 'x-tabler::', $matches[0]);
+            }, $value);
+        });
     }
 
     public function register(): void
