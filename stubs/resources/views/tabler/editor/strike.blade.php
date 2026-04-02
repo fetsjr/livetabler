@@ -1,0 +1,1 @@
+﻿<tabler:editor.button {{ $attributes }} title="Strikethrough"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12c-2-1.5-4-2.5-4-4.5C8 5.5 9.5 4 12 4s4 1.5 4 3.5M12 12h8M4 12h4m4 0c2 1.5 4 2.5 4 4.5 0 2-1.5 3.5-4 3.5s-4-1.5-4-3.5" /></svg></tabler:editor.button>

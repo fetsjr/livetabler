@@ -1,0 +1,1 @@
+﻿<tabler:editor.button {{ $attributes }} title="Bold"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 4.5h6a3.75 3.75 0 010 7.5H6.75m0-7.5v7.5m0 0h7.5a3.75 3.75 0 010 7.5H6.75m0-7.5v7.5" /></svg></tabler:editor.button>

@@ -1,0 +1,1 @@
+﻿<tabler:editor.button {{ $attributes }} title="Underline"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.995 4.5v7.003a6 6 0 01-11.991 0V4.5m-1.502 16.502h14.994" /></svg></tabler:editor.button>
