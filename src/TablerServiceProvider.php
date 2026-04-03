@@ -63,6 +63,11 @@ class TablerServiceProvider extends ServiceProvider
         Blade::component('tabler::sidebar', \Tabler\View\Components\Sidebar::class);
         Blade::component('tabler::page-header', \Tabler\View\Components\PageHeader::class);
         Blade::component('tabler::page-body', \Tabler\View\Components\PageBody::class);
+        Blade::component('tabler::skeleton', \Tabler\View\Components\Skeleton::class);
+        Blade::component('tabler::ribbon', \Tabler\View\Components\Ribbon::class);
+        Blade::component('tabler::chart', \Tabler\View\Components\Chart::class);
+        Blade::component('tabler::datatable', \Tabler\View\Components\Datatable::class);
+        Blade::component('tabler::dropzone', \Tabler\View\Components\Dropzone::class);
 
         Blade::directive('tablerScripts', function () {
             return '<script src="{{ asset(\'vendor/tabler/tabler.js\') }}" defer></script>';

@@ -1,14 +1,30 @@
-@props([
-    'tooltip' => null,
-    'summary' => null,
-    'value' => null,
-    'svg' => null,
-])
+<div id="{{ $id }}" style="min-height: {{ $height }}px;" {{ $attributes }}></div>
 
-@php
-    $value = is_array($value) ? \Illuminate\Support\Js::encode($value) : $value;
-@endphp
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (typeof ApexCharts !== 'undefined') {
+            const options = {
+                chart: {
+                    type: "{{ $type }}",
+                    fontFamily: 'inherit',
+                    height: {{ $height }},
+                    parentHeightOffset: 0,
+                    toolbar: {
+                        show: false,
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                grid: {
+                    strokeDashArray: 4,
+                },
+                colors: ["#066fd1", "#d63939", "#2fb344", "#f59f00", "#4299e1"],
+                ...{!! json_encode($options) !!}
+            };
 
-<div {{ $attributes->class(['block relative']) }} wire:ignore @if ($value) data-value="{{ $value }}" @endif data-tabler-chart>
-    {{ $slot }}
-</div>
+            window.{{ Str::camel($id) }} = new ApexCharts(document.getElementById('{{ $id }}'), options);
+            window.{{ Str::camel($id) }}.render();
+        }
+    });
+</script>

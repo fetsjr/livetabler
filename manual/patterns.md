@@ -36,7 +36,16 @@ El núcleo estructural de la aplicación.
 - `<tabler:dropdown>`: Menús desplegables integrados.
 - `<tabler:table>`: Tablas pre-estilizadas para dashboards.
 
-## 5. Prácticas de Desarrollo
+## 5. Advanced Analytics & Interaction
+- `<tabler:chart type="..." :options="...">`: Gráficos interactivos vía ApexCharts (Line, Bar, Pie, Area).
+- `<tabler:datatable :columns="...">`: Tablas avanzadas con búsqueda, ordenamiento y paginación nativa + Soporte AJAX.
+- `<tabler:dropzone url="...">`: Cargador de archivos visual con soporte para arrastrar y soltar (Drag & Drop) y seguridad CSRF.
+
+## 6. Feedback & Decoración (Carga y Estado)
+- `<tabler:skeleton lines="..." :circle="...">`: Estados de carga (Placeholders) con animación `glow` y formas de avatar.
+- `<tabler:ribbon position="..." color="...">`: Cintas decorativas para tarjetas (Card) con soporte de iconos y marcadores.
+
+## 7. Prácticas de Desarrollo
 - **Consistencia Visual**: Usa siempre las utilidades de Bootstrap 5 (`mb-3`, `text-muted`, etc.) en combinación con estos componentes.
 - **Validación**: Todos los componentes de formulario manejan automáticamente la clase `is-invalid` si existe un error en la sesión de Laravel.
 - **Iconografía**: Prefiere el uso de `<tabler:icon name="..." />` para mantener la coherencia en toda la interfaz.
