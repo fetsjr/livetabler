@@ -1,3 +1,8 @@
+@php
+    $active = $active ?? false;
+    $href = $href ?? '#';
+@endphp
+
 <li class="breadcrumb-item {{ $active ? 'active' : '' }}" {{ $active ? 'aria-current="page"' : '' }}>
     @if($href && !$active)
         <a href="{{ $href }}">{{ $slot }}</a>

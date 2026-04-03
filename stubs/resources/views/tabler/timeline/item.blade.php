@@ -1,3 +1,10 @@
+@php
+    $color = $color ?? 'primary';
+    $icon = $icon ?? 'check';
+    $time = $time ?? now()->format('H:i');
+    $title = $title ?? '';
+@endphp
+
 <li>
     <div class="list-timeline-icon bg-{{ $color }} text-white">
         <x-tabler::icon :name="$icon" size="14" stroke="2" />

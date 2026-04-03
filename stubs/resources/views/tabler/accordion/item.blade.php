@@ -1,3 +1,9 @@
+@php
+    $itemId = $itemId ?? 'acc-' . uniqid();
+    $title = $title ?? '';
+    $active = $active ?? false;
+@endphp
+
 <div class="accordion-item">
     <h2 class="accordion-header">
         <button class="accordion-button {{ ($active ?? false) ? '' : 'collapsed' }}" 
