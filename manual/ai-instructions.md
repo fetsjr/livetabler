@@ -13,7 +13,8 @@
 | PHP | ^8.1 |
 | Laravel | ^10, ^11, ^12, ^13 |
 | Livewire | ^3.7.4 / ^4.0 |
-| Tailwind CSS | Required (utility classes) |
+| Tabler UI | ^1.0 (Bootstrap 5) |
+| Tailwind CSS | Support included (optional) |
 | Alpine.js | Included via Livewire |
 
 ## Tag Syntax
@@ -243,7 +244,7 @@ Interactive components dispatch/listen to Alpine events:
     @livewireStyles
     @tablerStyles
 </head>
-<body class="min-h-screen bg-white dark:bg-zinc-900">
+<body class="min-h-screen bg-light">
     <tabler:sidebar sticky>
         <tabler:sidebar.toggle />
         <tabler:sidebar.brand href="/" logo="/logo.svg" name="My App" />
@@ -321,7 +322,7 @@ Interactive components dispatch/listen to Alpine events:
         </tabler:field>
     </tabler:fieldset>
 
-    <div class="flex justify-end gap-2 mt-4">
+    <div class="d-flex justify-content-end gap-2 mt-4">
         <tabler:button variant="ghost" type="button">Cancel</tabler:button>
         <tabler:button variant="primary" type="submit">Save</tabler:button>
     </div>
@@ -363,11 +364,11 @@ Interactive components dispatch/listen to Alpine events:
 
 1. **Always use `<tabler:...>` prefix** — never `<flux:...>` or `<x-tabler::...>` (the tag compiler handles conversion)
 2. **Use `wire:model` for Livewire binding** — the `name` prop is auto-detected
-3. **Wrap form inputs in `<tabler:field>`** for consistent layout with label and error
+3. **Wrap form inputs in `<tabler:field>`** — it provides standard Tabler/Bootstrap form layout
 4. **Use dot notation for sub-components** — e.g., `<tabler:card.header>`, `<tabler:table.row>`
-5. **Dark mode is built-in** — all components support `dark:` classes automatically
+5. **Tabler Design System** — all components use native Bootstrap 5 / Tabler classes, removing the need for custom Tailwind hacks for basic styling
 6. **Alpine.js events are the standard** — use `$dispatch()` for modals, toasts, dropdowns
 7. **Props are kebab-case in blade** — e.g., `icon-trailing`, not `iconTrailing`
 8. **Boolean props can be shorthand** — `<tabler:button disabled>` equals `disabled="true"`
-9. **All components support `class` merging** — extra Tailwind classes are merged
-10. **Icons use Heroicons names** — outline variant by default
+9. **Bootstrap Utils** — for custom spacing or layout tweaks, prefer Bootstrap's `mt-2`, `p-3`, `d-flex` etc.
+10. **Icons use Tabler/Heroicons** — provided via `{!! $icon !!}` or `<tabler:icon />`

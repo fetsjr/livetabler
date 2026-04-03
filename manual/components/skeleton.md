@@ -1,6 +1,6 @@
 # Skeleton
 
-Loading placeholder with animated pulse effect.
+Loading placeholder with animated pulse effect using native Tabler standards.
 
 ## Basic usage
 
@@ -13,8 +13,8 @@ Loading placeholder with animated pulse effect.
 | Prop | Type | Default | Description |
 |---|---|---|---|
 | `variant` | string | `'text'` | Shape: `text`, `rect`, `circle` |
-| `width` | string | `'w-full'` | Tailwind width class |
-| `height` | string | `'h-4'` | Tailwind height class |
+| `width` | string | `null` | Bootstrap width class (e.g., `w-100`, `w-25`) |
+| `height` | string | `null` | Bootstrap height class (e.g., `h-4`, `h-2`) |
 
 ## Variants
 
@@ -23,7 +23,7 @@ Loading placeholder with animated pulse effect.
 <tabler:skeleton variant="text" />
 
 {{-- Rectangle --}}
-<tabler:skeleton variant="rect" width="w-48" height="h-32" />
+<tabler:skeleton variant="rect" class="w-50 h-6" />
 
 {{-- Circle (avatar placeholder) --}}
 <tabler:skeleton variant="circle" />
@@ -33,9 +33,13 @@ Loading placeholder with animated pulse effect.
 
 ```blade
 <tabler:skeleton.group>
-    <tabler:skeleton variant="circle" />
-    <tabler:skeleton width="w-3/4" />
-    <tabler:skeleton width="w-1/2" />
+    <div class="d-flex align-items-center gap-2">
+        <tabler:skeleton variant="circle" />
+        <div class="w-100">
+            <tabler:skeleton class="w-75 mb-1" />
+            <tabler:skeleton class="w-50" />
+        </div>
+    </div>
 </tabler:skeleton.group>
 ```
 
@@ -51,4 +55,4 @@ Loading placeholder with animated pulse effect.
 | Component | Props | Purpose |
 |---|---|---|
 | `tabler:skeleton.group` | `animate` | Wrapper for multiple skeletons |
-| `tabler:skeleton.line` | `size` (`base`/`lg`), `animate` | Single text line placeholder |
+| `tabler:skeleton.line` | `size` (`sm`/`md`/`lg`), `animate` | Single text line placeholder |

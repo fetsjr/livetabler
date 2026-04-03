@@ -10,7 +10,6 @@ All components use the `<tabler:...>` prefix. Sub-components use dot notation:
 <tabler:button>                   {{-- Main component --}}
 <tabler:button.group>             {{-- Sub-component --}}
 <tabler:checkbox.group>           {{-- Group variant --}}
-<tabler:checkbox.group.variants.cards> {{-- Deep sub-component --}}
 ```
 
 ## Props and wire:model
@@ -24,7 +23,7 @@ Form components auto-detect `wire:model` for the `name` prop and error validatio
 
 {{-- Validation errors are auto-detected: --}}
 <tabler:input wire:model="email" />
-{{-- If $errors->has('email'), the input gets error styling automatically --}}
+{{-- If $errors->has('email'), the input gets .is-invalid automatically --}}
 ```
 
 ## Slots
@@ -49,24 +48,19 @@ Many components accept named slots using Blade's syntax:
 </tabler:table>
 ```
 
-## with-field wrapper
+## Field Wrapper
 
-Form components can be wrapped with `<tabler:with-field>` to add labels, descriptions, and error messages:
+Form components should be wrapped with `<tabler:field>` to add labels, descriptions, and error messages using standard Tabler form layouts:
 
 ```blade
-<tabler:with-field label="Email" description="We'll never share your email.">
-    <tabler:input wire:model="email" type="email" />
-</tabler:with-field>
+<tabler:field label="Email" description="We'll never share your email.">
+    <tabler:input wire:model="email" type="email" icon="envelope" />
+</tabler:field>
 ```
 
-The `<tabler:field>` component provides layout structure with variants:
-- `block` (default) — stacked label + input
-- `inline` — side-by-side label + input
-- `bare` — no wrapper
+## Alpine.js Interactivity
 
-## Alpine.js interactivity
-
-Interactive components use Alpine.js internally. You can also use Alpine attributes on any component:
+Interactive components use Alpine.js internally. You can trigger events directly:
 
 ```blade
 <tabler:button x-on:click="$dispatch('modal-show', { name: 'confirm' })">
@@ -91,39 +85,28 @@ LiveTabler uses Alpine.js window events for cross-component communication:
 | `modal-close` | `{ name? }` | Modal |
 | `toast-show` | `{ title, text, type, timeout }` | Toast |
 
-```blade
-{{-- Show toast from Livewire --}}
-<tabler:button wire:click="save" x-on:click="$dispatch('toast-show', { title: 'Saved!', type: 'success' })">
-    Save
-</tabler:button>
-```
-
 ## Size system
 
-Components that accept `size` follow a consistent scale:
+Components follow standard Bootstrap/Tabler sizing where applicable:
 
-| Size | Description |
-|---|---|
-| `xs` | Extra small (h-6) |
-| `sm` | Small (h-8) |
-| `md` | Medium (h-10) — default |
-| `lg` | Large (h-12) |
+| Size | Bootstrap Class | Description |
+|---|---|---|
+| `sm` | `.btn-sm` / `.form-control-sm` | Small |
+| `md` | (default) | Medium |
+| `lg` | `.btn-lg` / `.form-control-lg` | Large |
 
 ## Variant system
 
-Many components accept a `variant` prop:
+Many components accept a `variant` prop matching Tabler's semantic colors:
 
 ### Buttons
-`primary`, `outline`, `ghost`, `danger`, `filled`, `subtle`
+`primary`, `secondary`, `success`, `info`, `warning`, `danger`, `light`, `dark`, `link`, `outline-primary` (and other outlines), `ghost-primary` (and other ghosts)
 
 ### Badges
-`solid`, `outline`, `soft`
+`solid`, `outline`, `soft` (uses `.bg-*-lt`)
 
 ### Cards
-`blank` (default), `stacked`, `outline`
+`card` (default), `card-sm`, `card-md`, `card-lg`, `card-stacked`
 
 ### Callouts
-`info`, `success`, `warning`, `danger`
-
-### Fields
-`block`, `inline`, `bare`
+`info`, `success`, `warning`, `danger` (mapped to semantic backgrounds)
