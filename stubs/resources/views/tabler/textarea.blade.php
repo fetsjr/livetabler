@@ -2,11 +2,8 @@
     $name = $name ?? '';
     $invalid = $invalid ?? false;
     $rows = $rows ?? 4;
-@endphp
     $invalid = $invalid || ($name && $errors->has($name));
-
     $classes = 'form-control';
-
     if ($invalid) {
         $classes .= ' is-invalid';
     }
