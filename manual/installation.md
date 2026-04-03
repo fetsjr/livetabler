@@ -67,22 +67,17 @@ Add Tailwind CSS and Alpine.js to your layout file. If you're using Livewire, Al
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'App' }}</title>
 
-    {{-- Tailwind CSS via CDN (or use your build) --}}
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    {{-- Dark mode support --}}
-    <script>
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        }
-    </script>
+    {{-- Tabler UI Styles --}}
+    @tablerStyles
 
     @livewireStyles
 </head>
-<body class="min-h-screen bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">
+<body class="min-h-screen bg-light">
 
     {{ $slot }}
 
+    {{-- Tabler UI Scripts --}}
+    @tablerScripts
     @livewireScripts
 </body>
 </html>
@@ -128,6 +123,14 @@ All LiveTabler components use the `<tabler:...>` prefix:
 {{-- Self-closing --}}
 <tabler:separator />
 <tabler:icon name="home" />
+```
+
+## Using with Dark Mode
+
+Tabler's dark mode is typically toggled by adding the `theme-dark` class (or `data-bs-theme="dark"` in newer Bootstrap versions) to the `<body>` element. All styles and scripts are managed via `@tablerStyles` and `@tablerScripts`.
+
+```html
+<body class="theme-dark">
 ```
 
 ## Using with Livewire

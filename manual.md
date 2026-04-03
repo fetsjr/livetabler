@@ -10,20 +10,23 @@ Replicar la API de componentes de **Flux UI** (`<tabler:...>`) utilizando el mot
 ## 2. Estructura de Carpetas
 
 - **`src/`**: Contiene el código lógico de la librería.
-  - `TablerServiceProvider.php`: El motor que registra los componentes y vistas en Laravel.
-  - `helpers.php`: Funciones de utilidad para clases dinámicas.
+  - `TablerServiceProvider.php`: Registra componentes, vistas, directivas y publicación de activos.
+  - `TablerTagCompiler.php`: Compilador para etiquetas `<tabler:...>`.
+- **`resources/`**: Activos estáticos de Tabler UI (CSS/JS).
 - **`stubs/resources/views/tabler/`**: El catálogo de componentes Blade.
-  - Cada componente (ej. `accordion`) tiene su carpeta con un `index.blade.php` y sus sub-componentes (`item.blade.php`, `heading.blade.php`, etc.).
 
 ---
 
-## 3. Registro de Componentes (La Magia)
+## 3. Registro y Activos (La Magia)
 
-Para que Laravel reconozca la etiqueta `<tabler:componente>` sin el prefijo `x-`, el `TablerServiceProvider` realiza las siguientes acciones:
+Para que la librería funcione de forma autónoma, el `TablerServiceProvider` gestiona:
 
-1. **`loadViewsFrom`**: Registra el namespace `tabler::` para acceder a los archivos.
-2. **`anonymousComponentPath`**: Registra la carpeta de componentes anónimos.
-3. **`registerAliases`**: Mapea manualmente cada etiqueta a su archivo Blade para asegurar que el motor de Blade lo procese correctamente.
+1. **Vistas y Componentes**: Registra el namespace `tabler::` y la ruta de componentes anónimos.
+2. **Directivas de Activos**: 
+   - `@tablerStyles`: Carga el CSS de Tabler desde `public/vendor/tabler`.
+   - `@tablerScripts`: Carga el JS de Tabler.
+3. **Publicación**: Permite publicar los activos usando `php artisan vendor:publish --tag=tabler-assets`.
+4. **Tag Compiler**: Mapea etiquetas `<tabler:...>` a los componentes Blade correspondientes.
 
 ---
 

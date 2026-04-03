@@ -17,7 +17,28 @@ Install the package via Composer:
 composer require fetsjr/livetabler
 ```
 
-The service provider is auto-discovered via Laravel's package discovery.
+Publish the Tabler assets (CSS/JS):
+
+```bash
+php artisan vendor:publish --tag=tabler-assets
+```
+
+## Setup
+
+Add the Tabler styles and scripts to your layout file:
+
+```blade
+<html>
+<head>
+    ...
+    @tablerStyles
+</head>
+<body>
+    ...
+    @tablerScripts
+</body>
+</html>
+```
 
 ## Usage
 
