@@ -1,12 +1,9 @@
-@props([
-    'name' => $attributes->whereStartsWith('wire:model')->first(),
-    'value' => null,
-    'label' => null,
-    'description' => null,
-])
-
 @php
-    $id = $name . '_' . $value;
+    $name = $name ?? '';
+    $value = $value ?? '1';
+    $label = $label ?? null;
+    $description = $description ?? null;
+    $id = ($name ?: 'radio') . '_' . $value;
 @endphp
 
 <label {{ $attributes->merge(['class' => 'form-check']) }}>

@@ -1,10 +1,8 @@
-@props([
-    'name' => $attributes->whereStartsWith('wire:model')->first(),
-    'invalid' => false,
-    'rows' => 4,
-])
-
 @php
+    $name = $name ?? '';
+    $invalid = $invalid ?? false;
+    $rows = $rows ?? 4;
+@endphp
     $invalid = $invalid || ($name && $errors->has($name));
 
     $classes = 'form-control';

@@ -1,6 +1,12 @@
 @php
+    $name = $name ?? '';
+    $value = $value ?? '1';
+    $checked = $checked ?? false;
+    $switch = $switch ?? false;
+    $label = $label ?? null;
+    $description = $description ?? null;
     $classes = 'form-check';
-    if ($switch ?? false) {
+    if ($switch) {
         $classes .= ' form-switch';
     }
 @endphp
