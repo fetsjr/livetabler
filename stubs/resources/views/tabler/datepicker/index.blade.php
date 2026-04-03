@@ -9,6 +9,15 @@
     ], $options ?? []);
 @endphp
 
+@php
+    $id = $id ?? 'dp-' . uniqid();
+    $name = $name ?? '';
+    $value = $value ?? null;
+    $label = $label ?? null;
+    $placeholder = $placeholder ?? 'Seleccionar fecha...';
+    $format = $format ?? 'YYYY-MM-DD';
+@endphp
+
 <div class="mb-3">
     @if ($label ?? null)
         <label class="form-label">{{ $label }}</label>

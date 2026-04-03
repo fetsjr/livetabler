@@ -1,5 +1,12 @@
 @php
     $id = $id ?? 'autocomplete-' . uniqid();
+    $name = $name ?? '';
+    $value = $value ?? null;
+    $label = $label ?? null;
+    $placeholder = $placeholder ?? 'Buscar...';
+    $url = $url ?? null;
+    $minChars = $minChars ?? 3;
+    $options = $options ?? [];
 @endphp
 
 <div class="mb-3">

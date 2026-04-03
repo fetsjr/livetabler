@@ -1,5 +1,12 @@
 @php
     $id = $id ?? 'select-' . uniqid();
+    $value = $value ?? null;
+    $multiple = $multiple ?? false;
+    $name = $name ?? '';
+    $placeholder = $placeholder ?? '';
+    $options = $options ?? [];
+    $searchable = $searchable ?? false;
+
     $isSelected = function ($optionValue) use ($value, $multiple) {
         if ($multiple) {
             return in_array($optionValue, (array) ($value ?? []));
