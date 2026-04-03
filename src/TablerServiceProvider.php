@@ -22,6 +22,7 @@ class TablerServiceProvider extends ServiceProvider
 
     protected function bootComponentPath(): void
     {
+        $this->loadViewsFrom(__DIR__.'/../stubs/resources/views/tabler', 'tabler');
         Blade::anonymousComponentPath(__DIR__.'/../stubs/resources/views/tabler', 'tabler');
     }
 
