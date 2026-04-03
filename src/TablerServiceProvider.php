@@ -28,7 +28,10 @@ class TablerServiceProvider extends ServiceProvider
     protected function bootDirectives(): void
     {
         Blade::directive('tablerStyles', function () {
-            return '<link rel="stylesheet" href="{{ asset(\'vendor/tabler/tabler.min.css\') }}">';
+            return <<<'HTML'
+                <link rel="stylesheet" href="{{ asset('vendor/tabler/tabler.min.css') }}">
+                <link rel="stylesheet" href="{{ asset('vendor/tabler/tabler-vendors.min.css') }}">
+            HTML;
         });
 
         Blade::directive('tablerScripts', function () {
@@ -42,6 +45,7 @@ class TablerServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../resources/css' => public_path('vendor/tabler'),
                 __DIR__.'/../resources/js' => public_path('vendor/tabler'),
+                __DIR__.'/../resources/fonts' => public_path('vendor/tabler/fonts'),
             ], 'tabler-assets');
         }
     }
