@@ -1,4 +1,8 @@
 @php
+    $id = $id ?? 'modal-' . uniqid();
+    $size = $size ?? 'md';
+    $title = $title ?? '';
+    
     $dialogClasses = 'modal-dialog';
     
     if ($size !== 'md') {
