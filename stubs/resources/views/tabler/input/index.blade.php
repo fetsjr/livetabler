@@ -1,3 +1,7 @@
+@php
+    $name = $name ?? '';
+@endphp
+
 <div class="mb-3">
     @if ($label ?? null)
         <label class="form-label" for="{{ $name }}">{{ $label }}</label>

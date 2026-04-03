@@ -1,15 +1,22 @@
 @php
+    $variant = $variant ?? 'primary';
+    $dot = $dot ?? false;
+    $outline = $outline ?? false;
+    $pill = $pill ?? false;
+    $icon = $icon ?? null;
+    $label = $label ?? '';
+
     $classes = 'badge';
     
-    if ($dot ?? false) {
+    if ($dot) {
         $classes .= ' badge-dot';
     }
 
-    if ($outline ?? false) {
+    if ($outline) {
         $classes .= ' badge-outline';
     }
 
-    if ($pill ?? false) {
+    if ($pill) {
         $classes .= ' badge-pill';
     }
 

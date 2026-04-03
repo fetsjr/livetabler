@@ -1,4 +1,14 @@
 @php
+    $as = $as ?? 'button';
+    $size = $size ?? 'md';
+    $variant = $variant ?? 'primary';
+    $loading = $loading ?? false;
+    $pill = $pill ?? false;
+    $square = $square ?? false;
+    $icon = $icon ?? null;
+    $iconTrailing = $iconTrailing ?? null;
+    $href = $href ?? '#';
+
     $classes = 'btn';
 
     // Size
@@ -7,11 +17,11 @@
     }
 
     // Shape
-    if ($square ?? false) $classes .= ' btn-square';
-    if ($pill ?? false) $classes .= ' btn-pill';
+    if ($square) $classes .= ' btn-square';
+    if ($pill) $classes .= ' btn-pill';
 
     // Loading
-    if ($loading ?? false) $classes .= ' btn-loading disabled';
+    if ($loading) $classes .= ' btn-loading disabled';
 
     // Icon-only button detection (if slot is empty)
     $hasSlot = $slot->isNotEmpty();
@@ -20,14 +30,13 @@
     }
 
     // Color and Variant Mapping
-    // Tabler logic: btn-{variant} or btn-{color}
-    if (($variant ?? 'primary') === 'primary' && !($color ?? null)) {
+    if ($variant === 'primary' && !($color ?? null)) {
         $classes .= ' btn-primary';
-    } elseif (($variant ?? '') === 'outline') {
+    } elseif ($variant === 'outline') {
         $classes .= ' btn-outline-' . ($color ?? 'primary');
-    } elseif (($variant ?? '') === 'ghost') {
+    } elseif ($variant === 'ghost') {
         $classes .= ' btn-ghost-' . ($color ?? 'primary');
-    } elseif (($variant ?? '') === 'link') {
+    } elseif ($variant === 'link') {
         $classes .= ' btn-link';
     } else {
         $classes .= ' btn-' . ($variant ?? 'primary');
@@ -38,7 +47,7 @@
     if ($as === 'button') {
         $attributes = $attributes->merge(['type' => $type ?? 'button']);
     } else {
-        $attributes = $attributes->merge(['href' => $href ?? '#']);
+        $attributes = $attributes->merge(['href' => $href]);
     }
 @endphp
 

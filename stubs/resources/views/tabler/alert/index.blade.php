@@ -1,16 +1,25 @@
 @php
-    $classes = "alert alert-{$variant}";
+    $variant = $variant ?? 'info';
+    $title = $title ?? null;
+    $icon = $icon ?? null;
+    $dismissible = $dismissible ?? false;
+    $important = $important ?? false;
+
+    $classes = 'alert';
+    $classes .= " alert-{$variant}";
     
-    if ($important ?? false) {
-        $classes .= " alert-important";
+    if ($dismissible) {
+        $classes .= ' alert-dismissible';
     }
-    
-    if ($dismissible ?? false) {
-        $classes .= " alert-dismissible";
+
+    if ($important) {
+        $classes .= ' alert-important';
     }
+
+    $attributes = $attributes->class([$classes]);
 @endphp
 
-<div {{ $attributes->merge(['class' => $classes, 'role' => 'alert']) }}>
+<div {{ $attributes->merge(['role' => 'alert']) }}>
     <div class="d-flex">
         @if ($icon ?? null)
             <div>
