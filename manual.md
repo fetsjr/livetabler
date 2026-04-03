@@ -27,7 +27,7 @@ Para que Laravel reconozca la etiqueta `<tabler:componente>` sin el prefijo `x-`
 
 ---
 
-## 4. Estándares de Diseño
+## 4. Estándares de Diseño (Modernización 1.x)
 
 ### 4.1. Sintaxis de Llamada
 Los componentes deben seguir la estructura de sub-componentes de Flux:
@@ -40,14 +40,17 @@ Los componentes deben seguir la estructura de sub-componentes de Flux:
 </tabler:accordion>
 ```
 
-### 4.2. Clases Estilizadas
-Se priorizan las clases nativas de **Tabler** sobre las de Tailwind:
-- Accordion: `.accordion`, `.accordion-item`, `.accordion-button`.
-- Botones: `.btn`, `.btn-primary`, `.btn-lg`.
-- Inputs: `.form-control`, `.form-label`.
+### 4.2. Clases Nativas (Bootstrap 5 / Tabler)
+Se ha completado la migración de clases de Tailwind CSS a clases nativas de **Tabler** para asegurar la compatibilidad total con el ecosistema de Dashboards:
+- **Botones**: `.btn`, `.btn-primary`, `.btn-icon`, `.btn-loading`.
+- **Formularios**: `.form-control`, `.form-select`, `.input-icon`, `.is-invalid`.
+- **Navegación**: `.navbar-vertical`, `.nav-link`, `.nav-item`, `.dropdown-menu`.
+- **Tablas**: `.table`, `.card-table`, `.table-sort`, `.th`, `.td`.
+- **Feedback**: `.toast`, `.badge`, `.skeleton`, `.skeleton-pulse`.
+- **Layout**: `.card`, `.card-header`, `.card-body`, `.d-flex`, `.gap-2`.
 
 ### 4.3. Interactividad
-Se utiliza **Alpine.js** para toda la lógica de estado (abrir, cerrar, toggle, etc.) para mantener la librería ligera.
+Se utiliza **Alpine.js** para toda la lógica de estado (abrir, cerrar, toggle, etc.) para mantener la librería ligera. El diseño visual se delega al 100% en el CSS de Tabler.
 
 ---
 
@@ -70,7 +73,8 @@ Para trabajar localmente y ver cambios instantáneos sin subir a GitHub:
 
 ---
 
-## 6. Próximos Pasos
-1. Implementar componentes **Base** (+40): Button, Badge, Alert, Breadcrumbs, etc.
-2. Implementar componentes **Pro**: DatePicker (ya iniciado), Charts, Rich Text Editor.
-3. Crear documentación oficial en GitHub Pages.
+## 6. Próximos Pasos (Hoja de Ruta)
+1. **Auditoría Visual**: Verificar que la transición a clases nativas no haya roto el layout en dispositivos móviles (responsividad).
+2. **Componentes Complejos**: Refactorizar `autocomplete`, `date-picker` y `kanban` para usar el motor de búsqueda nativo de Tabler.
+3. **Documentación Pro**: Generar ejemplos interactivos para cada componente en un entorno de prueba visible.
+4. **Icons**: Centralizar y optimizar la carga de Tabler Icons (SVG) mediante un componente dedicado `<tabler:icon />`.
