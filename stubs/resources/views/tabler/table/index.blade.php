@@ -1,28 +1,29 @@
-@props([
-    'paginate' => null,
-    'card' => true,
-])
-
 @php
     $tableClasses = 'table table-vcenter';
     
-    if ($card) {
+    if ($striped ?? false) {
+        $tableClasses .= ' table-striped';
+    }
+    
+    if ($hover ?? true) {
+        $tableClasses .= ' table-hover';
+    }
+
+    if ($card ?? false) {
         $tableClasses .= ' card-table';
     }
+
+    $attributes = $attributes->class([]);
 @endphp
 
-<div {{ $attributes->only('class')->class(['table-responsive']) }}>
-    {{ $header ?? '' }}
-
-    <table {{ $attributes->except('class')->class([$tableClasses]) }}>
+<div class="{{ ($responsive ?? true) ? 'table-responsive' : '' }}">
+    <table {{ $attributes->merge(['class' => $tableClasses]) }}>
         {{ $slot }}
     </table>
 
-    {{ $footer ?? '' }}
-
-    @if ($paginate)
+    @if ($pagination ?? null)
         <div class="card-footer d-flex align-items-center">
-            {{ $paginate->links() }}
+            {{ $pagination }}
         </div>
     @endif
 </div>

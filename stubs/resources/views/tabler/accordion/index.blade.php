@@ -1,17 +1,10 @@
-@props([
-    'exclusive' => true,
-])
+@php
+    $classes = 'accordion';
+    if ($flush ?? false) {
+        $classes .= ' accordion-flush';
+    }
+@endphp
 
-<div 
-    x-data="{ 
-        activeItem: null,
-        toggle(name) {
-            if ('{{ $exclusive }}' == '1') {
-                this.activeItem = this.activeItem === name ? null : name;
-            }
-        }
-    }" 
-    {{ $attributes->class(['accordion']) }}
->
+<div {{ $attributes->merge(['class' => $classes, 'id' => $id]) }}>
     {{ $slot }}
 </div>

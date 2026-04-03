@@ -1,59 +1,34 @@
-@props([
-    'initials' => null,
-    'circle' => false,
-    'color' => null,
-    'badge' => null, // color
-    'name' => null,
-    'icon' => null,
-    'size' => 'md',
-    'src' => null,
-    'href' => null,
-    'as' => null,
-])
-
 @php
-    $as = $as ?? ($href ? 'a' : 'span');
-
-    if ($name && !$initials) {
-        $parts = explode(' ', trim($name));
-        if (count($parts) > 1) {
-            $initials = strtoupper(mb_substr($parts[0], 0, 1) . mb_substr($parts[count($parts) - 1], 0, 1));
-        } else {
-            $initials = strtoupper(mb_substr($parts[0], 0, 2));
-        }
-    }
-
     $classes = 'avatar';
-
-    if ($size !== 'md') {
+    
+    // Size logic (xs, sm, md, lg, xl)
+    if (($size ?? 'md') !== 'md') {
         $classes .= " avatar-{$size}";
     }
-
-    if ($circle) {
-        $classes .= ' avatar-rounded';
+    
+    // Shape logic (rounded is default in Tabler, circle uses .avatar-rounded or .rounded-circle)
+    if (($shape ?? 'rounded') === 'circle') {
+        $classes .= " rounded-circle";
     }
 
-    if ($color) {
+    // Color logic (subtle light backgrounds)
+    if ($color ?? null) {
         $classes .= " bg-{$color}-lt";
     }
 
     $attributes = $attributes->class([$classes]);
-
-    if ($as === 'a') {
-        $attributes = $attributes->merge(['href' => $href]);
-    }
 @endphp
 
-<{{ $as }} {{ $attributes }} @if($src) style="background-image: url({{ $src }})" @endif>
-    @if (!$src)
-        @if ($icon)
-            {!! $icon !!}
+<span {{ $attributes }} @if($src ?? null) style="background-image: url({{ $src }})" @endif>
+    @if (!($src ?? null))
+        @if ($icon ?? null)
+            <x-tabler::icon :name="$icon" />
         @else
             {{ $initials ?? $slot }}
         @endif
     @endif
 
-    @if ($badge)
-        <span class="badge bg-{{ $badge }}"></span>
+    @if ($status ?? null)
+        <span class="badge bg-{{ $status }}"></span>
     @endif
-</{{ $as }}>
+</span>

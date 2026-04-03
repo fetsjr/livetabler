@@ -1,7 +1,3 @@
-@props([
-    'horizontal' => false,
-])
-
-<ul {{ $attributes->class(['timeline', $horizontal ? 'timeline-row' : '']) }}>
+<ul {{ $attributes->class(['list list-timeline']) }}>
     {{ $slot }}
 </ul>

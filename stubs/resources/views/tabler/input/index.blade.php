@@ -1,52 +1,28 @@
-@props([
-    'name' => $attributes->whereStartsWith('wire:model')->first(),
-    'icon' => null,
-    'iconTrailing' => null,
-    'type' => 'text',
-    'invalid' => false,
-    'size' => null, // sm, lg
-])
+<div class="mb-3">
+    @if ($label ?? null)
+        <label class="form-label" for="{{ $name }}">{{ $label }}</label>
+    @endif
 
-@php
-    $invalid = $invalid || ($name && $errors->has($name));
-
-    $classes = 'form-control';
-    
-    if ($invalid) {
-        $classes .= ' is-invalid';
-    }
-
-    if ($size) {
-        $classes .= " form-control-{$size}";
-    }
-
-    $hasIcon = $icon || $iconTrailing;
-@endphp
-
-@if ($hasIcon)
-    <div class="input-icon">
-        @if ($icon)
+    <div class="{{ ($icon ?? null) ? 'input-icon' : '' }}">
+        @if ($icon ?? null)
             <span class="input-icon-addon">
-                {!! $icon !!}
+                <x-tabler::icon :name="$icon" />
             </span>
         @endif
 
-        <input
-            type="{{ $type }}"
-            @if ($name) name="{{ $name }}" {{ $attributes->wire('model') }} id="{{ $name }}" @endif
-            {{ $attributes->whereDoesntStartWith('wire:model')->class([$classes]) }}
-        />
+        <input type="{{ $type ?? 'text' }}" 
+               name="{{ $name }}" 
+               id="{{ $name }}" 
+               class="form-control @error($name) is-invalid @enderror" 
+               placeholder="{{ $placeholder ?? '' }}"
+               {{ $attributes->whereDoesntStartWith(['name', 'type', 'id', 'placeholder', 'class']) }}>
 
-        @if ($iconTrailing)
-            <span class="input-icon-addon">
-                {!! $iconTrailing !!}
-            </span>
-        @endif
+        @error($name)
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
     </div>
-@else
-    <input
-        type="{{ $type }}"
-        @if ($name) name="{{ $name }}" {{ $attributes->wire('model') }} id="{{ $name }}" @endif
-        {{ $attributes->whereDoesntStartWith('wire:model')->class([$classes]) }}
-    />
-@endif
+
+    @if ($description ?? null)
+        <small class="form-hint">{{ $description }}</small>
+    @endif
+</div>

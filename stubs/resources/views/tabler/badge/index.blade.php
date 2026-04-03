@@ -1,42 +1,28 @@
-@props([
-    'variant' => 'solid', // 'solid', 'outline', 'soft'
-    'pill' => false,
-    'color' => 'blue',
-    'size' => 'md',      // 'md', 'sm', 'lg'
-    'icon' => null,
-    'label' => null,
-])
-
 @php
     $classes = 'badge';
-
-    // Size
-    if ($size !== 'md') {
-        $classes .= " badge-{$size}";
+    
+    if ($dot ?? false) {
+        $classes .= ' badge-dot';
     }
 
-    // Shape
-    if ($pill) {
+    if ($outline ?? false) {
+        $classes .= ' badge-outline';
+    }
+
+    if ($pill ?? false) {
         $classes .= ' badge-pill';
     }
 
-    // Variant and Color
-    if ($variant === 'outline') {
-        $classes .= " badge-outline text-{$color}";
-    } elseif ($variant === 'soft') {
-        $classes .= " bg-{$color}-lt";
-    } else {
-        // solid
-        $classes .= " bg-{$color} text-white";
-    }
+    // Default color logic
+    $classes .= " bg-{$variant}";
 
     $attributes = $attributes->class([$classes]);
 @endphp
 
 <span {{ $attributes }}>
-    @if ($icon)
-        {!! $icon !!}
+    @if ($icon ?? null)
+        <x-tabler::icon :name="$icon" class="me-1" />
     @endif
-
-    {{ $slot->isEmpty() ? $label : $slot }}
+    
+    {{ $slot->isEmpty() ? ($label ?? '') : $slot }}
 </span>

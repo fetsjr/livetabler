@@ -1,35 +1,44 @@
-@props([
-    'size' => null,     // sm, md, lg
-    'stacked' => false,
-    'statusTop' => null, // color (blue, red, etc.)
-    'statusStart' => null, // color
-    'statusBottom' => null, // color
-])
-
 @php
     $classes = 'card';
-
-    if ($size) {
-        $classes .= " card-{$size}";
-    }
-
-    if ($stacked) {
-        $classes .= ' card-stacked';
-    }
+    
+    if ($sm ?? false) $classes .= ' card-sm';
+    if ($stacked ?? false) $classes .= ' card-stacked';
 
     $attributes = $attributes->class([$classes]);
 @endphp
 
 <div {{ $attributes }}>
-    @if ($statusTop)
-        <div class="card-status-top bg-{{ $statusTop }}"></div>
+    @if ($status ?? null)
+        <div class="card-status-top bg-{{ $status }}"></div>
     @endif
-    @if ($statusStart)
-        <div class="card-status-start bg-{{ $statusStart }}"></div>
+
+    @if (($title ?? null) || ($header ?? null) || ($actions ?? null))
+        <div class="card-header">
+            @if ($title ?? null)
+                <h3 class="card-title">{{ $title }}</h3>
+            @endif
+            
+            {{ $header ?? '' }}
+
+            @if ($actions ?? null)
+                <div class="card-actions">
+                    {{ $actions }}
+                </div>
+            @endif
+        </div>
     @endif
-    @if ($statusBottom)
-        <div class="card-status-bottom bg-{{ $statusBottom }}"></div>
+
+    @if ($body ?? null)
+        <div class="card-body">
+            {{ $body }}
+        </div>
+    @else
+        {{ $slot }}
     @endif
-    
-    {{ $slot }}
+
+    @if ($footer ?? null)
+        <div class="card-footer">
+            {{ $footer }}
+        </div>
+    @endif
 </div>

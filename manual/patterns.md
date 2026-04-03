@@ -1,112 +1,42 @@
-# Patterns
+# LiveTabler Component Library - Complete Guide
 
-Common usage patterns and conventions in LiveTabler components.
+Esta guía contiene la documentación técnica de todos los componentes modernizados de **LiveTabler**, diseñados para ser 100% compatibles con **Tabler UI / Bootstrap 5**.
 
-## Naming conventions
+## 1. Sistema de Layout Maestro
+El núcleo estructural de la aplicación.
+- `<tabler:layout type="...">`: Soporta `vertical`, `horizontal`, `combo`, `boxed`, `fluid`, `condensed`, `overlap`.
+- `<tabler:navbar>`: Barra superior inteligente con soporte `sticky` y `overlap`.
+- `<tabler:sidebar>`: Menú lateral con soporte para temas `dark`/`light`.
+- `<tabler:page-header>`: Título, subtítulo y botones de acción.
+- `<tabler:page-body>`: Contenedor principal de contenido.
 
-All components use the `<tabler:...>` prefix. Sub-components use dot notation:
+## 2. Componentes de Navegación y Estructura
+- `<tabler:breadcrumb>` & `<tabler:breadcrumb-item>`: Navegación de ruta.
+- `<tabler:steps>` & `<tabler:step-item>`: Indicadores de proceso/vistas.
+- `<tabler:accordion>` & `<tabler:accordion-item>`: Colapsables de contenido.
+- `<tabler:timeline>` & `<tabler:timeline-item>`: Listado de eventos cronológicos.
 
-```blade
-<tabler:button>                   {{-- Main component --}}
-<tabler:button.group>             {{-- Sub-component --}}
-<tabler:checkbox.group>           {{-- Group variant --}}
-```
+## 3. Formit (Formularios y Captura)
+- `<tabler:input>`: Campos de texto estándar con soporte de iconos y validación.
+- `<tabler:select>`: Selector inteligente (Simple, Multi-select, Searchable vía Tom Select).
+- `<tabler:datepicker>`: Selector de fechas profesional con Litepicker.
+- `<tabler:autocomplete>`: Búsqueda dinámica en tiempo real vía AJAX.
+- `<tabler:checkbox>`: Checkboxes estilizados nativos.
 
-## Props and wire:model
+## 4. UI Elements (Visualización)
+- `<tabler:button>`: Botones con estados, colores y carga.
+- `<tabler:icon>`: Acceso centralizado a los iconos de Tabler.
+- `<tabler:badge>`: Etiquetas de estado y contadores.
+- `<tabler:status>`: Puntos indicadores de estado (animados opcionalmente).
+- `<tabler:avatar>`: Imágenes de perfil con tamaños y formas.
+- `<tabler:progress>`: Barras de progreso con etiquetas y colores.
+- `<tabler:card>`: Contonenedores con headers, footers y ribbons.
+- `<tabler:alert>`: Mensajes de retroalimentación (Info, Success, Warning, Error).
+- `<tabler:modal>`: Diálogos avanzados con soporte de scroll y estados.
+- `<tabler:dropdown>`: Menús desplegables integrados.
+- `<tabler:table>`: Tablas pre-estilizadas para dashboards.
 
-Form components auto-detect `wire:model` for the `name` prop and error validation:
-
-```blade
-{{-- These are equivalent: --}}
-<tabler:input wire:model="email" />
-<tabler:input wire:model="email" name="email" />
-
-{{-- Validation errors are auto-detected: --}}
-<tabler:input wire:model="email" />
-{{-- If $errors->has('email'), the input gets .is-invalid automatically --}}
-```
-
-## Slots
-
-Many components accept named slots using Blade's syntax:
-
-```blade
-<tabler:table>
-    <x-slot:header>
-        <tabler:table.columns>
-            <tabler:table.column>Name</tabler:table.column>
-            <tabler:table.column>Email</tabler:table.column>
-        </tabler:table.columns>
-    </x-slot:header>
-
-    <tabler:table.rows>
-        <tabler:table.row>
-            <tabler:table.cell>John</tabler:table.cell>
-            <tabler:table.cell>john@example.com</tabler:table.cell>
-        </tabler:table.row>
-    </tabler:table.rows>
-</tabler:table>
-```
-
-## Field Wrapper
-
-Form components should be wrapped with `<tabler:field>` to add labels, descriptions, and error messages using standard Tabler form layouts:
-
-```blade
-<tabler:field label="Email" description="We'll never share your email.">
-    <tabler:input wire:model="email" type="email" icon="envelope" />
-</tabler:field>
-```
-
-## Alpine.js Interactivity
-
-Interactive components use Alpine.js internally. You can trigger events directly:
-
-```blade
-<tabler:button x-on:click="$dispatch('modal-show', { name: 'confirm' })">
-    Open Modal
-</tabler:button>
-
-<tabler:modal name="confirm">
-    <tabler:heading level="3">Are you sure?</tabler:heading>
-    <tabler:button variant="danger" x-on:click="$dispatch('modal-close')">
-        Confirm
-    </tabler:button>
-</tabler:modal>
-```
-
-## Events
-
-LiveTabler uses Alpine.js window events for cross-component communication:
-
-| Event | Data | Used by |
-|---|---|---|
-| `modal-show` | `{ name }` | Modal |
-| `modal-close` | `{ name? }` | Modal |
-| `toast-show` | `{ title, text, type, timeout }` | Toast |
-
-## Size system
-
-Components follow standard Bootstrap/Tabler sizing where applicable:
-
-| Size | Bootstrap Class | Description |
-|---|---|---|
-| `sm` | `.btn-sm` / `.form-control-sm` | Small |
-| `md` | (default) | Medium |
-| `lg` | `.btn-lg` / `.form-control-lg` | Large |
-
-## Variant system
-
-Many components accept a `variant` prop matching Tabler's semantic colors:
-
-### Buttons
-`primary`, `secondary`, `success`, `info`, `warning`, `danger`, `light`, `dark`, `link`, `outline-primary` (and other outlines), `ghost-primary` (and other ghosts)
-
-### Badges
-`solid`, `outline`, `soft` (uses `.bg-*-lt`)
-
-### Cards
-`card` (default), `card-sm`, `card-md`, `card-lg`, `card-stacked`
-
-### Callouts
-`info`, `success`, `warning`, `danger` (mapped to semantic backgrounds)
+## 5. Prácticas de Desarrollo
+- **Consistencia Visual**: Usa siempre las utilidades de Bootstrap 5 (`mb-3`, `text-muted`, etc.) en combinación con estos componentes.
+- **Validación**: Todos los componentes de formulario manejan automáticamente la clase `is-invalid` si existe un error en la sesión de Laravel.
+- **Iconografía**: Prefiere el uso de `<tabler:icon name="..." />` para mantener la coherencia en toda la interfaz.
