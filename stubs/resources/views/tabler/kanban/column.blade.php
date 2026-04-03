@@ -4,16 +4,18 @@
 
 <!-- Column container for kanban cards -->
 <div 
-    {{ $attributes->class(['flex flex-col shrink-0 w-80 max-h-full rounded-xl bg-gray-100/80 dark:bg-zinc-800/50 snap-start border border-gray-200 dark:border-zinc-800/80']) }}
+    {{ $attributes->class(['col-auto']) }}
+    style="width: 320px;"
 >
-    <!-- Column Header -->
-    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200/50 dark:border-zinc-700/50">
-        <h3 class="font-semibold text-gray-800 text-sm dark:text-gray-200">{{ $title }}</h3>
-        <!-- You could render an icon or count here -->
-    </div>
-    
-    <!-- Droppable / scrollable body area -->
-    <div class="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-3">
-        {{ $slot }}
+    <div class="card h-100 bg-light shadow-none">
+        <!-- Column Header -->
+        <div class="card-header border-bottom-0 py-2">
+            <h3 class="card-title fw-bold text-muted small text-uppercase">{{ $title }}</h3>
+        </div>
+        
+        <!-- Droppable / scrollable body area -->
+        <div class="card-body p-2 overflow-y-auto d-flex flex-column gap-2">
+            {{ $slot }}
+        </div>
     </div>
 </div>

@@ -1,20 +1,13 @@
 @props([
     'size' => 'base',
-    'animate' => null,
+    'animate' => 'pulse',
 ])
 
 @php
-$classes = 'w-full';
-$classes .= match ($size) {
-    'lg' => ' h-6',
-    default => ' h-5',
-};
-$classes .= match ($animate) {
-    'pulse' => ' animate-pulse',
-    default => '',
-};
+    $classes = "skeleton";
+    if ($animate === 'pulse') { $classes .= ' skeleton-pulse'; }
 @endphp
 
-<div {{ $attributes->class([$classes]) }}>
-    <div class="h-full rounded bg-zinc-200 dark:bg-zinc-700">{{ $slot }}</div>
+<div {{ $attributes->class([$classes]) }} style="height: {{ $size === 'lg' ? '1.5rem' : '1.25rem' }};">
+    {{ $slot }}
 </div>

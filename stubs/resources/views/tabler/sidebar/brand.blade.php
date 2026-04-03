@@ -3,9 +3,9 @@
     'logo' => null,
 ])
 
-<a href="{{ $href }}" {{ $attributes->class(['flex items-center gap-2 px-3 py-2 font-semibold text-zinc-800 dark:text-white']) }}>
+<a href="{{ $href }}" {{ $attributes->class(['navbar-brand navbar-brand-autodark']) }}>
     @if ($logo)
-        <img src="{{ $logo }}" alt="Logo" class="h-8 w-auto" />
+        <img src="{{ $logo }}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
     @endif
     {{ $slot }}
 </a>

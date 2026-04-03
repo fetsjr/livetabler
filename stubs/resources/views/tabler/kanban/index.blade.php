@@ -1,7 +1,6 @@
 <!-- The Kanban wrapper horizontally scrollable -->
 <div 
-    {{ $attributes->class(['flex overflow-x-auto overflow-y-hidden pb-4 snap-x snap-mandatory gap-6 items-start h-full min-h-[500px] w-full']) }}
-    data-tabler-kanban
+    {{ $attributes->class(['row flex-nowrap overflow-auto pb-3 gx-3 align-items-start min-vh-50 w-100']) }}
 >
     <!-- We expect flux:kanban.column items inside -->
     {{ $slot }}

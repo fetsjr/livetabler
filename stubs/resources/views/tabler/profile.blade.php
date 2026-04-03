@@ -5,7 +5,7 @@
     'size' => 'md',
 ])
 
-<div {{ $attributes->class(['flex items-center gap-3']) }}>
+<div {{ $attributes->class(['d-flex align-items-center gap-2']) }}>
     <!-- Delegate avatar render to our avatar component -->
     @if ($avatar)
         <x-tabler::avatar :src="$avatar" :name="$name" :size="$size" circle />
@@ -13,10 +13,10 @@
         <x-tabler::avatar :name="$name" :size="$size" circle />
     @endif
 
-    <div class="flex flex-col">
-        <span class="text-sm font-semibold leading-tight text-gray-900 dark:text-white">{{ $name }}</span>
+    <div class="d-flex flex-column lh-1">
+        <span class="fw-bold small">{{ $name }}</span>
         @if ($description)
-            <span class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ $description }}</span>
+            <span class="text-secondary smaller mt-1">{{ $description }}</span>
         @endif
     </div>
 </div>

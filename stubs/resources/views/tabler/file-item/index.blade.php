@@ -3,22 +3,22 @@
     'size' => '',
 ])
 
-<div {{ $attributes->class(['flex items-center justify-between p-3 rounded-lg border border-gray-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900']) }}>
-    <div class="flex items-center gap-3">
-        <!-- Generic Icon -->
-        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+<div {{ $attributes->class(['card card-sm shadow-none border-1 p-3']) }}>
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <!-- Generic Icon -->
+            <div class="bg-blue-lt p-2 rounded text-blue">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 12l2 2l4 -4" /></svg>
+            </div>
+            <div class="d-flex flex-column">
+                <span class="fw-bold small text-dark">{{ $name }}</span>
+                @if($size)
+                    <span class="text-secondary smaller">{{ $size }}</span>
+                @endif
+            </div>
         </div>
-        <div class="flex flex-col">
-            <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $name }}</span>
-            @if($size)
-                <span class="text-xs text-gray-500 dark:text-gray-400">{{ $size }}</span>
-            @endif
+        <div class="ms-auto flex-shrink-0">
+            {{ $slot }}
         </div>
-    </div>
-    <div class="pl-3">
-        {{ $slot }}
     </div>
 </div>

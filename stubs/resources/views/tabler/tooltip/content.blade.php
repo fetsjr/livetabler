@@ -1,3 +1,3 @@
-<div {{ $attributes->class(['text-xs text-zinc-600 dark:text-zinc-300']) }}>
+<div {{ $attributes->class(['small text-secondary']) }}>
     {{ $slot }}
 </div>

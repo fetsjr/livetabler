@@ -12,7 +12,6 @@
             this.left = e.clientX;
             this.top = e.clientY;
             
-            // Adjust bounds (basic logic)
             this.$nextTick(() => {
                 const el = this.$refs.contextMenu;
                 if (!el) return;
@@ -29,14 +28,8 @@
     x-cloak
     x-ref="contextMenu"
     :style="`top: ${top}px; left: ${left}px; position: fixed;`"
-    x-transition:enter="transition ease-out duration-100"
-    x-transition:enter-start="opacity-0 scale-95"
-    x-transition:enter-end="opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-75"
-    x-transition:leave-start="opacity-100 scale-100"
-    x-transition:leave-end="opacity-0 scale-95"
-    {{ $attributes->class(['z-[100] min-w-[160px] rounded-lg border border-gray-200 bg-white p-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-800']) }}
+    {{ $attributes->class(['dropdown-menu show shadow-lg']) }}
+    style="z-index: 1050; min-width: 160px;"
 >
-    <!-- Use flux:menu.item inside this context wrapper generally -->
     {{ $slot }}
 </div>

@@ -6,10 +6,9 @@
 ])
 
 @php
-$classes = 'block relative';
-$value = is_array($value) ? \Illuminate\Support\Js::encode($value) : $value;
+    $value = is_array($value) ? \Illuminate\Support\Js::encode($value) : $value;
 @endphp
 
-<div {{ $attributes->class($classes) }} wire:ignore.children @if ($value) data-value="{{ $value }}" @endif data-flux-chart>
+<div {{ $attributes->class(['block relative']) }} wire:ignore @if ($value) data-value="{{ $value }}" @endif data-tabler-chart>
     {{ $slot }}
 </div>

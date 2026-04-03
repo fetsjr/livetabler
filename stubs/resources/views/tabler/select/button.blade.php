@@ -8,40 +8,32 @@
 ])
 
 @php
-$sizeClasses = match($size ?? null) {
-        'sm' => 'h-8 text-sm rounded-md ps-3 pe-8',
-        'xs' => 'h-6 text-xs rounded ps-2 pe-6',
-        default => 'h-10 text-base sm:text-sm rounded-lg ps-3 pe-10',
-    };
-    $classes = "group/select-button cursor-default overflow-hidden flex items-center shadow-xs bg-white dark:bg-white/10 {$sizeClasses} border border-zinc-200 dark:border-zinc-600 w-full text-start";
-
-$name = $attributes->whereStartsWith('wire:model')->first();
-$invalid ??= ($name && $errors->has($name));
+    $invalid = $invalid || ($max && $errors->has($max)); // Simple fallback
+    $classes = 'form-select text-start d-flex align-items-center position-relative shadow-none border-1';
+    if ($size) { $classes .= " form-select-{$size}"; }
+    if ($invalid) { $classes .= ' is-invalid'; }
 @endphp
 
 <button
     type="button"
-    {{ $attributes->class($classes) }}
-    @if ($invalid) data-invalid aria-invalid="true" @endif
+    {{ $attributes->class([$classes])->merge(['style' => 'background-image: none;']) }}
     data-flux-select-button
 >
-    @if ($slot->isNotEmpty())
-        {{ $slot }}
-    @else
-        <tabler:select.selected :$placeholder :$suffix :$max />
-    @endif
+    <div class="flex-grow-1 overflow-hidden">
+        @if ($slot->isNotEmpty())
+            {{ $slot }}
+        @else
+            <x-tabler::select.selected :$placeholder :$suffix :$max />
+        @endif
+    </div>
 
-    @if ($clearable && $size !== 'xs')
-        <span class="absolute right-8 hidden [[data-has-value]_&]:flex items-center cursor-pointer text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300" data-flux-select-clear>
-            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-            </svg>
+    @if ($clearable)
+        <span class="position-absolute end-0 me-5 cursor-pointer text-muted" data-flux-select-clear style="z-index: 5;">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-xs" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
         </span>
     @endif
 
-    <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center {{ $size === 'xs' ? 'pr-1.5' : 'pr-3' }}">
-        <svg class="{{ $size === 'xs' ? 'h-3 w-3' : 'h-4 w-4' }} text-zinc-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-        </svg>
+    <span class="position-absolute end-0 me-2 pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-xs text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg>
     </span>
 </button>

@@ -2,24 +2,27 @@
     'icon' => null,
     'href' => null,
     'danger' => false,
-    'variant' => null,
     'shortcut' => null,
 ])
 
 @php
-$tag = $href ? 'a' : 'button';
-$baseClasses = $danger
-    ? 'text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10'
-    : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700';
+    $tag = $href ? 'a' : 'button';
 @endphp
 
 <{{ $tag }}
     @if ($href) href="{{ $href }}" @else type="button" @endif
-    {{ $attributes->class(["flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-sm transition-colors $baseClasses"]) }}
+    {{ $attributes->class(['nav-link', 'text-danger' => $danger]) }}
 >
-    {{ $slot }}
+    @if ($icon)
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            {!! $icon !!}
+        </span>
+    @endif
+    <span class="nav-link-title">
+        {{ $slot }}
+    </span>
 
     @if ($shortcut)
-        <span class="ml-auto text-xs text-zinc-400 dark:text-zinc-500">{{ $shortcut }}</span>
+        <small class="ms-auto text-muted">{{ $shortcut }}</small>
     @endif
 </{{ $tag }}>

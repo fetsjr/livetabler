@@ -5,34 +5,24 @@
     'icon' => null,
 ])
 
-@php
-$classes = 'h-10 w-full flex items-center px-3 py-2 font-medium text-base sm:text-sm text-zinc-800 dark:text-white ps-9 pe-9 outline-hidden border-b border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700';
-@endphp
-
-<div class="relative flex grow" data-flux-select-search>
-    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+<div class="input-icon w-100 border-bottom">
+    <span class="input-icon-addon">
         @if ($icon)
-            <tabler:icon :name="$icon" class="h-4 w-4 text-zinc-400" />
+            <x-tabler::icon :name="$icon" class="icon" />
         @else
-            <svg class="h-4 w-4 text-zinc-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
         @endif
-    </div>
-
+    </span>
     <input
         type="text"
-        {{ $attributes->class($classes) }}
+        {{ $attributes->class(['form-control border-0 shadow-none']) }}
         placeholder="{{ $placeholder ?? __('Search...') }}"
         data-flux-select-search-input
         autofocus
     >
-
     @if ($clearable)
-        <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300" data-flux-select-search-clear>
-            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-            </svg>
-        </button>
+        <span class="input-icon-addon input-icon-addon-end cursor-pointer" data-flux-select-search-clear>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+        </span>
     @endif
 </div>

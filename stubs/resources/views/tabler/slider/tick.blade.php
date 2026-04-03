@@ -1,2 +1,2 @@
 <!-- Tick Mark -->
-<span class="inline-block h-3 w-0.5 bg-gray-400 dark:bg-gray-600 self-center"></span>
+<span class="d-inline-block bg-secondary opacity-50" style="height: 10px; width: 1px;"></span>

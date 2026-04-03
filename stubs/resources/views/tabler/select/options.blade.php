@@ -5,26 +5,26 @@
 ])
 
 @php
-$classes = 'min-w-48 max-h-[14rem] p-[.3125rem] scroll-py-[.3125rem] rounded-lg shadow-xs border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700';
+    $classes = 'dropdown-menu show shadow-lg border-1 overflow-auto';
 @endphp
 
 @if (! $searchable)
-    <div popover {{ $attributes->class($classes) }} data-flux-listbox-options>
+    <div {{ $attributes->class([$classes])->merge(['style' => 'max-height: 20rem; min-width: 200px;']) }} data-flux-listbox-options>
         {{ $slot }}
     </div>
 @else
-    <div popover class="rounded-lg shadow-xs border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700" data-flux-options>
+    <div class="{{ $classes }}" style="min-width: 250px;" data-flux-options>
         @if ($search)
             {{ $search }}
         @else
-            <tabler:select.search />
+            <x-tabler::select.search />
         @endif
 
-        <div class="max-h-[20rem] overflow-y-auto p-[.3125rem]">
+        <div class="overflow-y-auto" style="max-height: 20rem;">
             @if ($empty)
                 {{ $empty }}
             @else
-                <tabler:select.option.empty>No results found</tabler:select.option.empty>
+                <x-tabler::select.option.empty>No results found</x-tabler::select.option.empty>
             @endif
 
             {{ $slot }}
