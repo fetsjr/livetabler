@@ -45,7 +45,7 @@ class TablerServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../resources/css' => public_path('vendor/tabler'),
                 __DIR__.'/../resources/js' => public_path('vendor/tabler'),
-                __DIR__.'/../resources/fonts' => public_path('vendor/tabler/fonts'),
+                __DIR__.'/../resources/fonts' => public_path('vendor/fonts'),
             ], 'tabler-assets');
         }
     }
