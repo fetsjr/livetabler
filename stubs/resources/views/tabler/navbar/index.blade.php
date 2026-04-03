@@ -1,10 +1,18 @@
+@php
+    $sticky = $sticky ?? false;
+    $overlap = $overlap ?? false;
+    $theme = $theme ?? 'light';
+    $logo = $logo ?? null;
+    $brand = $brand ?? 'Tabler';
+@endphp
+
 <header @class([
     'navbar navbar-expand-md',
     'sticky-top' => $sticky,
     'navbar-overlap' => $overlap,
-    'navbar-light' => ($theme ?? 'light') === 'light',
-    'navbar-dark' => ($theme ?? 'light') === 'dark',
-]) data-bs-theme="{{ $theme ?? 'light' }}">
+    'navbar-light' => $theme === 'light',
+    'navbar-dark' => $theme === 'dark',
+]) data-bs-theme="{{ $theme }}">
     <div class="container-xl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

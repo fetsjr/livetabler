@@ -1,3 +1,11 @@
+@php
+    $glow = $glow ?? true;
+    $circle = $circle ?? false;
+    $lines = $lines ?? 1;
+    $width = $width ?? '100';
+    $size = $size ?? 'md';
+@endphp
+
 <div @class([
     'placeholder-glow' => $glow,
 ]) {{ $attributes }}>

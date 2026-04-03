@@ -1,10 +1,13 @@
+@php
+    $fluid = $fluid ?? false;
+    $id = $id ?? 'chart-' . Str::random(8);
+    $type = $type ?? 'line';
+    $height = $height ?? '350';
+    $options = $options ?? [];
+@endphp
+
 <div id="{{ $id }}" style="min-height: {{ $height }}px;" {{ $attributes }}></div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        if (typeof ApexCharts !== 'undefined') {
-            const options = {
-                chart: {
                     type: "{{ $type }}",
                     fontFamily: 'inherit',
                     height: {{ $height }},

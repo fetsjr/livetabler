@@ -1,9 +1,28 @@
+@php
+    $type = $type ?? 'vertical';
+    $sticky = $sticky ?? false;
+    $overlap = $overlap ?? false;
+    $theme = $theme ?? 'light';
+@endphp
+
 <div @class([
     'page',
     'page-wrapper' => $type === 'horizontal' || $type === 'boxed' || $type === 'fluid',
 ])>
     @if ($type === 'vertical' || $type === 'combo' || $type === 'condensed')
-        {{ $sidebar ?? '' }}
+        @php
+            $theme = $theme ?? 'dark';
+            $logo = $logo ?? null;
+            $brand = $brand ?? 'Tabler';
+        @endphp
+
+        <aside @class([
+            'navbar navbar-vertical navbar-expand-lg',
+            'navbar-dark' => $theme === 'dark',
+            'navbar-light' => $theme === 'light',
+        ]) data-bs-theme="{{ $theme }}">
+            {{ $sidebar ?? '' }}
+        </aside>
     @endif
 
     <div class="page-wrapper">
@@ -11,7 +30,14 @@
             {{ $navbar ?? '' }}
         @endif
 
-        {{ $slot }}
+        @php
+            $title = $title ?? null;
+            $subtitle = $subtitle ?? null;
+        @endphp
+
+        <div class="page-header d-print-none" {{ $attributes }}>
+            {{ $slot }}
+        </div>
 
         <footer class="footer footer-transparent d-print-none">
             <div @class([

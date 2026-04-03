@@ -1,3 +1,12 @@
+@php
+    $id = $id ?? 'dz-' . \Illuminate\Support\Str::random(8);
+    $url = $url ?? '#';
+    $message = $message ?? 'Arrastra tus archivos aquí o haz clic para subir';
+    $name = $name ?? 'file';
+    $maxFiles = $maxFiles ?? 1;
+    $acceptedFiles = $acceptedFiles ?? 'image/*';
+@endphp
+
 <div id="{{ $id }}" class="dropzone" data-url="{{ $url }}" {{ $attributes }}>
     <div class="dz-message">
         <div class="mb-3">

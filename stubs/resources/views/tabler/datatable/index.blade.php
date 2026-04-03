@@ -1,3 +1,11 @@
+@php
+    $id = $id ?? 'dt-' . Str::random(8);
+    $columns = $columns ?? [];
+    $url = $url ?? null;
+    $searchable = $searchable ?? true;
+    $paginated = $paginated ?? true;
+@endphp
+
 <div class="table-responsive">
     <table id="{{ $id }}" class="table card-table table-vcenter text-nowrap datatable" {{ $attributes }}>
         <thead>

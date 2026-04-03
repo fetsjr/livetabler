@@ -1,8 +1,13 @@
 <main class="page-body">
-    <div @class([
-        'container-xl' => !($fluid ?? false),
-        'container-fluid' => ($fluid ?? false),
-    ])>
+    @php
+    $fluid = $fluid ?? false;
+@endphp
+
+<div @class([
+    'page-body',
+    'container-xl' => !$fluid,
+    'container-fluid' => $fluid,
+]) {{ $attributes }}>
         {{ $slot }}
     </div>
 </main>
