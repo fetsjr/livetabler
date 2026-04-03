@@ -1,28 +1,27 @@
 @props([
     'paginate' => null,
+    'card' => true,
 ])
 
 @php
-    $containerClasses = "flex flex-col border border-gray-200 dark:border-zinc-800/60 rounded-lg bg-white dark:bg-zinc-900 overflow-hidden";
+    $tableClasses = 'table table-vcenter';
     
-    // Tabler table styles: strict spacing, clear borders, white bg
-    $tableClasses = "min-w-full text-left text-sm whitespace-nowrap";
+    if ($card) {
+        $tableClasses .= ' card-table';
+    }
 @endphp
 
-<div {{ $attributes->only('class')->class([$containerClasses]) }}>
+<div {{ $attributes->only('class')->class(['table-responsive']) }}>
     {{ $header ?? '' }}
 
-    <div class="overflow-x-auto">
-        <table class="{{ $tableClasses }}" {{ $attributes->except('class') }}>
-            {{ $slot }}
-        </table>
-    </div>
+    <table {{ $attributes->except('class')->class([$tableClasses]) }}>
+        {{ $slot }}
+    </table>
 
     {{ $footer ?? '' }}
 
     @if ($paginate)
-        <div class="px-4 py-3 border-t border-gray-200 dark:border-zinc-800/60 flex items-center justify-between">
-            <!-- Replace this later with a dedicated tabler:pagination component as needed -->
+        <div class="card-footer d-flex align-items-center">
             {{ $paginate->links() }}
         </div>
     @endif

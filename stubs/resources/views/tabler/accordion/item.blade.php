@@ -6,21 +6,19 @@
     x-data="{ 
         name: '{{ $name }}', 
         get isOpen() { 
-            // If inside exclusive accordion
-            if (typeof activeItem !== 'undefined') return activeItem === this.name;
+            if (typeof activeItem !== 'undefined' && activeItem !== null) return activeItem === this.name;
             return this.localOpen;
         },
         localOpen: false,
         toggleItem() {
-            if (typeof toggle !== 'undefined') {
+            if (typeof toggle !== 'undefined' && typeof activeItem !== 'undefined') {
                 toggle(this.name);
             } else {
                 this.localOpen = !this.localOpen;
             }
         }
     }"
-    {{ $attributes->class(['border-b border-gray-200 dark:border-zinc-800 last:border-0']) }}
-    data-tabler-accordion-item
+    {{ $attributes->class(['accordion-item']) }}
 >
     {{ $slot }}
 </div>

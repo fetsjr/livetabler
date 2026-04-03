@@ -1,7 +1,7 @@
-<div 
-    {{ $attributes->class(['flex flex-wrap items-center gap-1 border-b border-gray-200 dark:border-zinc-800']) }}
+<ul 
+    {{ $attributes->class(['nav nav-tabs']) }}
     role="tablist"
+    data-bs-toggle="tabs"
 >
-    <!-- We inject an internal context for Tabs via class structure without polluting global scope -->
     {{ $slot }}
-</div>
+</ul>

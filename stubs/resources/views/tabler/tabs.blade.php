@@ -4,8 +4,7 @@
 
 <div 
     x-data="{ activeTab: '{{ $default }}' }" 
-    {{ $attributes->class(['flex flex-col w-full']) }}
-    data-tabler-tabs
+    {{ $attributes->class(['w-100']) }}
 >
     {{ $slot }}
 </div>

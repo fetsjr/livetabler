@@ -1,23 +1,35 @@
 @props([
-    'size' => null,     // sm or null (default)
-    'variant' => null,  // blank, stacked, outline
+    'size' => null,     // sm, md, lg
+    'stacked' => false,
+    'statusTop' => null, // color (blue, red, etc.)
+    'statusStart' => null, // color
+    'statusBottom' => null, // color
 ])
 
 @php
-    $baseClasses = "flex flex-col relative bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 shadow-sm";
+    $classes = 'card';
 
-    $sizeClasses = match($size) {
-        'sm' => "p-4 rounded-md",
-        default => "p-6 rounded-lg",
-    };
-
-    if ($variant === 'outline') {
-        $baseClasses = "flex flex-col relative bg-transparent border border-gray-200 dark:border-zinc-800";
+    if ($size) {
+        $classes .= " card-{$size}";
     }
 
-    $classes = "{$baseClasses} {$sizeClasses}";
+    if ($stacked) {
+        $classes .= ' card-stacked';
+    }
+
+    $attributes = $attributes->class([$classes]);
 @endphp
 
-<div {{ $attributes->class([$classes]) }}>
+<div {{ $attributes }}>
+    @if ($statusTop)
+        <div class="card-status-top bg-{{ $statusTop }}"></div>
+    @endif
+    @if ($statusStart)
+        <div class="card-status-start bg-{{ $statusStart }}"></div>
+    @endif
+    @if ($statusBottom)
+        <div class="card-status-bottom bg-{{ $statusBottom }}"></div>
+    @endif
+    
     {{ $slot }}
 </div>

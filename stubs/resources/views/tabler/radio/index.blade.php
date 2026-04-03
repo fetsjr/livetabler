@@ -6,29 +6,24 @@
 ])
 
 @php
-    // Native Radio Tailwind representation matching Tabler styling
-    $inputClasses = "rounded-full border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900 dark:checked:bg-blue-600 dark:focus:ring-blue-500";
-    $labelClasses = "ml-2 block text-sm font-medium text-gray-800 dark:text-gray-200 cursor-pointer select-none";
     $id = $name . '_' . $value;
 @endphp
 
-<div class="relative flex items-start mb-2">
-    <div class="flex h-5 items-center">
-        <input
-            type="radio"
-            value="{{ $value }}"
-            {{ $attributes->class([$inputClasses]) }}
-            @if ($name) name="{{ $name }}" {{ $attributes->wire('model') }} id="{{ $id }}" @endif
-        />
-    </div>
-    @if ($label || $slot->isNotEmpty())
-        <div class="ms-3 text-sm">
-            <label @if ($name) for="{{ $id }}" @endif class="{{ $labelClasses }}">
-                {{ $label ?? $slot }}
-            </label>
+<label {{ $attributes->merge(['class' => 'form-check']) }}>
+    <input
+        type="radio"
+        value="{{ $value }}"
+        class="form-check-input"
+        @if ($name) name="{{ $name }}" {{ $attributes->wire('model') }} id="{{ $id }}" @endif
+    />
+    @if ($label || $slot->isNotEmpty() || $description)
+        <span class="form-check-label">
+            {{ $label ?? $slot }}
             @if ($description)
-                <p class="text-gray-500 dark:text-gray-400 mt-0.5">{{ $description }}</p>
+                <span class="form-check-description">
+                    {{ $description }}
+                </span>
             @endif
-        </div>
+        </span>
     @endif
-</div>
+</label>

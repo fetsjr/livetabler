@@ -1,3 +1,3 @@
-<p {{ $attributes->class(['text-base leading-relaxed text-gray-600 dark:text-gray-400']) }}>
+<p {{ $attributes->class(['text-secondary lead']) }}>
     {{ $slot }}
 </p>

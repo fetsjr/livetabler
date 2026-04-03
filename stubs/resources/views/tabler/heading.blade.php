@@ -3,15 +3,15 @@
 ])
 
 @php
-    $classes = match((int) $level) {
-        1 => 'text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl mb-6',
-        2 => 'text-2xl font-semibold tracking-tight text-gray-900 dark:text-white mb-4',
-        3 => 'text-xl font-semibold text-gray-900 dark:text-white mb-3',
-        4 => 'text-lg font-medium text-gray-900 dark:text-white mb-2',
-        5 => 'text-base font-medium text-gray-900 dark:text-white mb-1',
-        default => 'text-base font-semibold text-gray-900 dark:text-white',
+    $level = (int) $level;
+    $tag = 'h' . min(max($level, 1), 6);
+    $classes = match($level) {
+        1 => 'h1 mb-3',
+        2 => 'h2 mb-2',
+        3 => 'h3 mb-2',
+        4 => 'h4 mb-1',
+        default => 'h5',
     };
-    $tag = 'h' . min(max((int) $level, 1), 6);
 @endphp
 
 <{{ $tag }} {{ $attributes->class([$classes]) }}>
