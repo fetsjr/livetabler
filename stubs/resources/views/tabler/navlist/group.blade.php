@@ -3,9 +3,9 @@
     'expandable' => false,
 ])
 
-<div {{ $attributes->class(['flex flex-col']) }}>
+<div {{ $attributes->class(['d-flex flex-column']) }}>
     @if ($heading)
-        <div class="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+        <div class="px-3 py-2 small fw-semibold text-uppercase text-muted" style="letter-spacing: .04em;">
             {{ $heading }}
         </div>
     @endif

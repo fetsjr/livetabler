@@ -9,18 +9,18 @@
 @endphp
 
 @if (! $searchable)
-    <div {{ $attributes->class([$classes])->merge(['style' => 'max-height: 20rem; min-width: 200px;']) }} data-flux-listbox-options>
+    <div {{ $attributes->class([$classes])->merge(['style' => 'max-height: 20rem; min-width: 200px;']) }} data-tabler-listbox-options>
         {{ $slot }}
     </div>
 @else
-    <div class="{{ $classes }}" style="min-width: 250px;" data-flux-options>
+    <div class="{{ $classes }}" style="min-width: 250px;" data-tabler-options>
         @if ($search)
             {{ $search }}
         @else
             <x-tabler::select.search />
         @endif
 
-        <div class="overflow-y-auto" style="max-height: 20rem;">
+        <div class="overflow-auto" style="max-height: 20rem;">
             @if ($empty)
                 {{ $empty }}
             @else

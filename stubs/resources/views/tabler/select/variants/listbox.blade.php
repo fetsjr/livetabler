@@ -20,8 +20,8 @@
         value: '',
         toggle() { this.open = !this.open; },
     }"
-    {{ $attributes->class(['relative w-full']) }}
-    data-flux-select
+    {{ $attributes->class(['position-relative w-100']) }}
+    data-tabler-select
 >
     @if ($trigger ?? $button)
         {{ $trigger ?? $button }}

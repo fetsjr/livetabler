@@ -16,8 +16,8 @@
         value: '',
         filter: '',
     }"
-    {{ $attributes->class(['relative w-full']) }}
-    data-flux-select
+    {{ $attributes->class(['position-relative w-100']) }}
+    data-tabler-select
 >
     @if ($input)
         {{ $input }}

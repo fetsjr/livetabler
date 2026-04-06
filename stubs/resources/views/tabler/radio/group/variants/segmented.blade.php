@@ -1,3 +1,3 @@
-<div {{ $attributes->class(['flex rounded-lg border border-zinc-200 dark:border-zinc-700 overflow-hidden']) }}>
+<div {{ $attributes->class(['d-flex rounded border border-secondary overflow-hidden']) }}>
     {{ $slot }}
 </div>

@@ -6,12 +6,12 @@
 ])
 
 @php
-$classes = 'p-2 flex flex-col';
+$classes = 'p-2 d-flex flex-column';
 @endphp
 
-<div {{ $attributes->class($classes) }} data-flux-kanban-column-header>
-    <div class="flex items-center justify-between min-h-8">
-        <div class="px-3 flex items-center gap-1.5">
+<div {{ $attributes->class($classes) }} data-tabler-kanban-column-header>
+    <div class="d-flex align-items-center justify-content-between" style="min-height: 2rem;">
+        <div class="px-3 d-flex align-items-center gap-2">
             {{ $slot }}
 
             @if ($heading)
@@ -19,7 +19,7 @@ $classes = 'p-2 flex flex-col';
             @endif
 
             @if ($count)
-                <div class="text-sm text-zinc-500 dark:text-white/70">{{ $count }}</div>
+                <div class="small text-muted">{{ $count }}</div>
             @endif
 
             @if ($badge)
@@ -27,13 +27,13 @@ $classes = 'p-2 flex flex-col';
             @endif
         </div>
 
-        <div class="flex items-center gap-1">
+        <div class="d-flex align-items-center gap-1">
             {{ $actions ?? '' }}
         </div>
     </div>
 
     @if ($subheading)
-        <div class="px-3 flex items-center gap-1.5 mb-1">
+        <div class="px-3 d-flex align-items-center gap-2 mb-1">
             <tabler:subheading>{{ $subheading }}</tabler:subheading>
         </div>
     @endif

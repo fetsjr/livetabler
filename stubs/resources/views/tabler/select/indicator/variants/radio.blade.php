@@ -1,7 +1,11 @@
 @php
-$classes = 'h-4 w-4 shrink-0 rounded-full border border-zinc-300 dark:border-zinc-500 [ui-option[data-selected]_&]:border-zinc-800 dark:[ui-option[data-selected]_&]:border-white flex items-center justify-center';
+$classes = 'd-flex align-items-center justify-content-center flex-shrink-0 rounded-circle border border-secondary';
 @endphp
 
-<span {{ $attributes->class($classes) }}>
-    <span class="h-2 w-2 rounded-full hidden [ui-option[data-selected]_&]:block bg-zinc-800 dark:bg-white"></span>
+<span {{ $attributes->class($classes) }} style="width: 1rem; height: 1rem;"
+    data-tabler-indicator="radio">
+    <span class="rounded-circle bg-body"
+        style="width: 0.5rem; height: 0.5rem; display: none;"
+        data-checked-dot>
+    </span>
 </span>

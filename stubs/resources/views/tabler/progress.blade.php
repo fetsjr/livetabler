@@ -14,9 +14,9 @@
     }
 @endphp
 
-<div {{ $attributes->class(['w-full']) }}>
+<div {{ $attributes->class(['w-100']) }}>
     @if ($label)
-        <div class="mb-2 text-sm font-medium d-flex justify-content-between">
+        <div class="mb-2 small fw-medium d-flex justify-content-between">
             <span>{{ $label }}</span>
             <span>{{ $clampedValue }}%</span>
         </div>

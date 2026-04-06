@@ -2,6 +2,6 @@
     'placeholder' => 'No time selected',
 ])
 
-<div {{ $attributes->class(['text-sm text-zinc-700 dark:text-zinc-300']) }}>
+<div {{ $attributes->class(['small text-muted']) }}>
     {{ $slot->isEmpty() ? $placeholder : $slot }}
 </div>

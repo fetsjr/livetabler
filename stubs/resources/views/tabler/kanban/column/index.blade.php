@@ -3,10 +3,10 @@
 ])
 
 @php
-$classes = 'rounded-lg w-80 max-w-80 bg-zinc-100 dark:bg-zinc-800';
+$classes = 'rounded-3 bg-body-tertiary';
 @endphp
 
-<div data-flux-kanban-column>
+<div data-tabler-kanban-column style="width: 20rem; max-width: 20rem;">
     <div {{ $attributes->class($classes) }}>
         {{ $slot }}
     </div>

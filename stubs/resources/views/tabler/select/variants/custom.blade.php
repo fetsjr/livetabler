@@ -6,6 +6,6 @@
     'name' => null,
 ])
 
-<div {{ $attributes->class(['relative w-full']) }} data-flux-select>
+<div {{ $attributes->class(['position-relative w-100']) }} data-tabler-select>
     {{ $slot }}
 </div>

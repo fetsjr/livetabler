@@ -12,7 +12,7 @@
         $message = $errorBag->first($name . '.*');
     }
 
-    $classes = "mt-1.5 text-sm text-red-500 dark:text-red-400 " . ($message ? 'block' : 'hidden');
+    $classes = "mt-1 small text-danger " . ($message ? 'd-block' : 'd-none');
 @endphp
 
 <div role="alert" {{ $attributes->class([$classes]) }} data-tabler-error>

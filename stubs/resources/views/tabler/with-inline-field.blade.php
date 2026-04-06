@@ -8,7 +8,7 @@
     <x-tabler::field variant="inline" {{ $attributes->only('class') }}>
         {{ $slot }}
 
-        <div class="flex flex-col gap-0.5">
+        <div class="d-flex flex-column" style="gap: 0.125rem;">
             @if (isset($label))
                 <x-tabler::label class="!mb-0">{{ $label }}</x-tabler::label>
             @endif

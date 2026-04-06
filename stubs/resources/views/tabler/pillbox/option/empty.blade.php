@@ -1,7 +1,4 @@
-@php
-$classes = 'data-hidden:hidden block items-center px-2 py-1.5 w-full rounded-md text-start text-sm font-medium text-zinc-500 dark:text-zinc-300';
-@endphp
-
-<div {{ $attributes->class($classes) }} data-flux-listbox-empty>
+<div {{ $attributes->class(['dropdown-item small fw-medium text-muted w-100 text-start px-2 py-2']) }}
+    data-tabler-listbox-empty>
     {{ $slot }}
 </div>

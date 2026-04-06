@@ -4,7 +4,7 @@
 ])
 
 @php
-$classes = 'min-w-12 shrink flex-1 outline-none ms-1 placeholder-zinc-400 dark:placeholder-zinc-400 disabled:placeholder-zinc-400/70 dark:disabled:placeholder-zinc-500';
+$classes = 'border-0 bg-transparent p-0 ps-1 small outline-0';
 
 $name = $attributes->whereStartsWith('wire:model')->first();
 $invalid ??= ($name && $errors->has($name));
@@ -16,5 +16,6 @@ $invalid ??= ($name && $errors->has($name));
     @if ($invalid) aria-invalid="true" data-invalid @endif
     placeholder="{{ $placeholder }}"
     data-placeholder="{{ $placeholder }}"
-    data-flux-pillbox-input
+    data-tabler-pillbox-input
+    style="min-width: 3rem; flex: 1;"
 >

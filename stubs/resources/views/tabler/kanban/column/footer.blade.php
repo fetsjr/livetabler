@@ -1,7 +1,7 @@
 @php
-$classes = 'px-2 pb-2 flex flex-col gap-2';
+$classes = 'px-2 pb-2 d-flex flex-column gap-2';
 @endphp
 
-<div {{ $attributes->class($classes) }} data-flux-kanban-column-footer>
+<div {{ $attributes->class($classes) }} data-tabler-kanban-column-footer>
     {{ $slot }}
 </div>

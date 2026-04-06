@@ -17,9 +17,9 @@
 <button
     type="button"
     {{ $attributes->class([$classes])->merge(['style' => 'background-image: none;']) }}
-    data-flux-select-button
+    data-tabler-select-button
 >
-    <div class="flex-grow-1 overflow-hidden">
+    <div class="flex-fill overflow-hidden">
         @if ($slot->isNotEmpty())
             {{ $slot }}
         @else
@@ -28,7 +28,7 @@
     </div>
 
     @if ($clearable)
-        <span class="position-absolute end-0 me-5 cursor-pointer text-muted" data-flux-select-clear style="z-index: 5;">
+        <span class="position-absolute end-0 me-5 cursor-pointer text-muted" data-tabler-select-clear style="z-index: 5;">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-xs" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
         </span>
     @endif

@@ -1,3 +1,3 @@
-<div {{ $attributes->class(['flex items-center justify-center w-4 text-zinc-300 dark:text-zinc-600 text-lg']) }}>
+<div {{ $attributes->class(['d-flex align-items-center justify-content-center text-muted fs-4']) }} style="width: 1rem;">
     &ndash;
 </div>

@@ -8,13 +8,13 @@
 @php
 $tag = $href ? 'a' : 'button';
 $currentClasses = $current
-    ? 'text-zinc-900 dark:text-white border-b-2 border-zinc-900 dark:border-white'
-    : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white';
+    ? 'text-dark border-bottom border-dark border-2 fw-semibold'
+    : 'text-muted';
 @endphp
 
 <{{ $tag }}
     @if ($href) href="{{ $href }}" @else type="button" @endif
-    {{ $attributes->class(["inline-flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors $currentClasses"]) }}
+    {{ $attributes->class(["nav-link d-inline-flex align-items-center gap-2 small fw-medium $currentClasses"]) }}
 >
     {{ $slot }}
 

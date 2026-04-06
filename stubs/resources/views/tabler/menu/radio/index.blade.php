@@ -6,11 +6,14 @@
 
 <button
     type="button"
-    {{ $attributes->class(['flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors']) }}
+    {{ $attributes->class(['dropdown-item d-flex align-items-center gap-2']) }}
 >
-    <span class="flex h-4 w-4 items-center justify-center rounded-full border border-zinc-300 dark:border-zinc-600 {{ $checked ? 'border-blue-600' : '' }}">
+    <span
+        class="d-flex align-items-center justify-content-center rounded-circle border {{ $checked ? 'border-primary' : 'border-secondary' }}"
+        style="width: 1rem; height: 1rem;"
+    >
         @if ($checked)
-            <span class="h-2 w-2 rounded-full bg-blue-600"></span>
+            <span class="rounded-circle bg-primary" style="width: 0.5rem; height: 0.5rem;"></span>
         @endif
     </span>
     <span>{{ $slot }}</span>

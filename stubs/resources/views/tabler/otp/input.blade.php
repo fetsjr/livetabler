@@ -16,5 +16,6 @@
         paste.split('').forEach((char, i) => { if (inputs[i]) inputs[i].value = char; });
         inputs[Math.min(paste.length, inputs.length) - 1]?.focus();
     "
-    {{ $attributes->class(['h-10 w-10 rounded-md border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-center text-lg font-semibold text-zinc-800 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none']) }}
+    {{ $attributes->class(['form-control text-center fs-4 fw-semibold p-0 shadow-none']) }}
+    style="width: 2.5rem; height: 2.5rem;"
 />

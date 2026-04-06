@@ -21,7 +21,7 @@
         ></textarea>
         
         <!-- Composer Actions (like Send button) -->
-        <div class="ms-2 d-flex shrink-0 align-items-center gap-2">
+        <div class="ms-2 d-flex flex-shrink-0 align-items-center gap-2">
             {{ $slot }}
         </div>
     </div>

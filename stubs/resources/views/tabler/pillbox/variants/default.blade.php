@@ -27,8 +27,8 @@
         },
         isSelected(value) { return this.selected.includes(value); },
     }"
-    {{ $attributes->class(['relative w-full']) }}
-    data-flux-pillbox
+    {{ $attributes->class(['position-relative w-100']) }}
+    data-tabler-pillbox
 >
     @if ($trigger)
         {{ $trigger }}
