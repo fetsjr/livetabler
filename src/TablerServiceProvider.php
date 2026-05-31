@@ -38,7 +38,10 @@ class TablerServiceProvider extends ServiceProvider
     {
         $ruta = __DIR__.'/../resources/views/components';
 
-        // Permite cargar las vistas también como tabler::... si hiciera falta.
+        // Registra además el namespace de vistas "tabler::" para poder incluir
+        // parciales con @include('tabler::...') o view('tabler::...') desde otros
+        // componentes durante la migración. La sintaxis <x-tabler::...> NO depende
+        // de esto, sino de anonymousComponentPath (línea siguiente).
         $this->loadViewsFrom($ruta, 'tabler');
 
         // Habilita la sintaxis de componente anónimo <x-tabler::...>.
