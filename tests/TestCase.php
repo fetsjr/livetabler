@@ -26,4 +26,15 @@ class TestCase extends BaseTestCase
             TablerServiceProvider::class,
         ];
     }
+
+    /**
+     * Define la configuración de entorno de la app de pruebas.
+     *
+     * Establece una clave de cifrado para que las peticiones HTTP del
+     * playground (que pasan por el middleware de sesión/cookies) funcionen.
+     */
+    protected function defineEnvironment($app): void
+    {
+        $app['config']->set('app.key', 'base64:hsx1Kqf2YbHRBHGcjTKj8K8DSpkLfFsVWl4nXg4kQ1Y=');
+    }
 }

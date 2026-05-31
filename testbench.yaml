@@ -1,0 +1,11 @@
+# Configuración del Workbench de Orchestra Testbench.
+# Levanta una mini-app Laravel que carga LiveTabler para ver los componentes.
+providers:
+  - Tabler\TablerServiceProvider
+
+workbench:
+  start: '/'
+  install: true
+  discovers:
+    web: true
+    views: true
