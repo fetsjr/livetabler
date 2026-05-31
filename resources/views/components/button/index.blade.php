@@ -6,6 +6,7 @@
 
     // Color base de Tabler usado por las variantes 'outline' y 'ghost'
     // (primary, secondary, success, danger, warning, info...).
+    // OJO: solo aplica a 'outline' y 'ghost'; en las demás variantes se ignora.
     'color' => 'primary',
 
     // Tamaño del botón: 'sm' | 'md' | 'lg'. 'md' es el tamaño normal y no añade clase.
@@ -50,10 +51,24 @@
         'link'    => 'btn-link',              // se ve como un enlace de texto
         default   => 'btn-'.$variant,         // 'primary', 'secondary' o un color directo
     };
+
+    // Atributos propios según la etiqueta. Se pasan por merge() para que el consumidor
+    // pueda sobrescribirlos y para no duplicar atributos.
+    $atributosEtiqueta = $etiqueta === 'a'
+        ? ['href' => $href ?? '#']   // enlace: usa href (o '#' si se fuerza as="a" sin href)
+        : ['type' => $type];         // botón: tipo button/submit/reset
+
+    // Un <a> no admite el atributo disabled real; si está cargando, lo deshabilitamos
+    // de forma accesible para que no sea navegable ni enfocable con el teclado.
+    if ($etiqueta === 'a' && $loading) {
+        $atributosEtiqueta['aria-disabled'] = 'true';
+        $atributosEtiqueta['tabindex'] = '-1';
+    }
 @endphp
 
-<{{ $etiqueta }}
-    @class([
+{{-- Fusionamos las clases calculadas y los atributos propios con los que ponga el
+     consumidor (class="...", id="...", etc.), produciendo un único atributo class. --}}
+<{{ $etiqueta }} {{ $attributes->class([
         'btn',                                              // clase base de Tabler
         'btn-'.$size => $size !== 'md',                     // btn-sm / btn-lg (md no añade clase)
         'btn-pill' => $pill,                                // forma de píldora
@@ -61,14 +76,7 @@
         'btn-icon' => ! $tieneTexto && ($icon || $loading),// botón de solo icono
         'btn-loading disabled' => $loading,                // estado de carga (deshabilitado)
         $claseVariante,                                     // clase de color/variante calculada
-    ])
-    @if ($etiqueta === 'a')
-        href="{{ $href ?? '#' }}"
-    @else
-        type="{{ $type }}"
-    @endif
-    {{ $attributes }}
->
+    ])->merge($atributosEtiqueta) }}>
     {{-- Icono inicial (no se muestra mientras carga, para no chocar con el spinner) --}}
     @if ($icon && ! $loading)
         <x-tabler::icon :name="$icon" @class(['me-2' => $tieneTexto]) />

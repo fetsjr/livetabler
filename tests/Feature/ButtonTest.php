@@ -88,4 +88,31 @@ class ButtonTest extends TestCase
             ->assertSee('ti-home', false)
             ->assertSee('Inicio');
     }
+
+    public function test_fusiona_clases_del_consumidor(): void
+    {
+        $this->blade('<x-tabler::button class="w-100">OK</x-tabler::button>')
+            ->assertSee('btn btn-primary w-100', false);
+    }
+
+    public function test_icono_final(): void
+    {
+        $this->blade('<x-tabler::button iconTrailing="arrow-right">Siguiente</x-tabler::button>')
+            ->assertSee('ti-arrow-right', false);
+    }
+
+    public function test_como_enlace_sin_href(): void
+    {
+        $html = $this->blade('<x-tabler::button as="a">Enlace</x-tabler::button>')->__toString();
+
+        $this->assertStringContainsString('<a', $html);
+        $this->assertStringContainsString('href="#"', $html);
+    }
+
+    public function test_enlace_cargando_es_accesible(): void
+    {
+        $this->blade('<x-tabler::button href="/x" :loading="true">OK</x-tabler::button>')
+            ->assertSee('aria-disabled="true"', false)
+            ->assertSee('tabindex="-1"', false);
+    }
 }
