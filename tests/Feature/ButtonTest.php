@@ -115,4 +115,10 @@ class ButtonTest extends TestCase
             ->assertSee('aria-disabled="true"', false)
             ->assertSee('tabindex="-1"', false);
     }
+
+    public function test_boton_cargando_esta_deshabilitado_de_verdad(): void
+    {
+        $this->blade('<x-tabler::button :loading="true">OK</x-tabler::button>')
+            ->assertSee('disabled="disabled"', false);
+    }
 }

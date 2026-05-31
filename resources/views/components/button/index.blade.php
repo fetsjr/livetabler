@@ -64,6 +64,12 @@
         $atributosEtiqueta['aria-disabled'] = 'true';
         $atributosEtiqueta['tabindex'] = '-1';
     }
+
+    // Cuando es un <button> en estado de carga, lo deshabilitamos de verdad
+    // (no solo con la clase visual), para que no se pueda pulsar ni enviar.
+    if ($etiqueta === 'button' && $loading) {
+        $atributosEtiqueta['disabled'] = 'disabled';
+    }
 @endphp
 
 {{-- Fusionamos las clases calculadas y los atributos propios con los que ponga el
