@@ -36,6 +36,14 @@
                 <x-tabler::icon name="heart" class="text-red" />
             </div>
         </div>
+        {{-- Sección: input --}}
+        <div class="card mt-4">
+            <div class="card-header"><h3 class="card-title">Input</h3></div>
+            <div class="card-body">
+                <x-tabler::input name="nombre" label="Nombre" placeholder="Tu nombre" />
+                <x-tabler::input name="correo" type="email" label="Correo" icon="mail" description="No lo compartiremos." />
+            </div>
+        </div>
     </div>
     {{-- Inyecta el JS de Tabler publicado --}}
     @tablerScripts
