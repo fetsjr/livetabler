@@ -30,7 +30,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
+        "test": "@php vendor/bin/phpunit",
         "serve": "@php vendor/bin/testbench serve"
     },
     "config": {
