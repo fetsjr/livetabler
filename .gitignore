@@ -1,0 +1,25 @@
+# Carpeta de referencia: código original de Flux (normal y pro) y Tabler.
+# Solo se usa como material de consulta local; NUNCA debe subirse al repositorio.
+/codigo/
+
+# Dependencias
+/vendor/
+/node_modules/
+
+# Entorno y configuración local
+.env
+.env.*
+!.env.example
+
+# Builds y caches
+/public/build/
+/public/hot
+.phpunit.result.cache
+.phpunit.cache/
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
