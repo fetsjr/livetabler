@@ -59,7 +59,22 @@ navegador descarta el del consumidor.
 - Usa atributos ARIA y roles cuando el patrón de Tabler lo requiera.
 
 ## 8. Formularios
-- Integrar `@error` con las clases `is-invalid` / `invalid-feedback` para mostrar validación.
+- Mostrar validación con las clases `is-invalid` (en el control) e `invalid-feedback` (el mensaje).
+- **No uses `@error` directamente** en un componente de librería: compila a un `$errors->getBag()`
+  sin proteger y lanza "Undefined variable $errors" cuando el componente se renderiza fuera de
+  una petición web (tests aislados, Livewire inline, correos, consola). En una petición web real
+  `$errors` siempre está compartido, así que el comportamiento es idéntico, pero el componente
+  debe ser robusto en cualquier contexto. Usa el guard:
+  ```blade
+  @php
+      // true solo si hay un error de validación para este campo (robusto si $errors no existe).
+      $tieneError = $name && isset($errors) && $errors->has($name);
+  @endphp
+  <input {{ $attributes->class(['form-control', 'is-invalid' => $tieneError]) }}>
+  @if ($tieneError)
+      <div class="invalid-feedback">{{ $errors->first($name) }}</div>
+  @endif
+  ```
 
 ## 9. JavaScript
 - Si un componente necesita JS de Tabler, debe auto-inicializarse cuando la librería esté
