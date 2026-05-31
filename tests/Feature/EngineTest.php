@@ -17,4 +17,16 @@ class EngineTest extends TestCase
             ->assertSee('btn-primary', false)
             ->assertSee('Guardar');
     }
+
+    /**
+     * Los sub-componentes anidados se resuelven con notación de punto:
+     * <x-tabler::accordion.item> -> accordion/item.blade.php.
+     */
+    public function test_subcomponente_anidado_se_resuelve_con_punto(): void
+    {
+        $vista = $this->blade('<x-tabler::accordion.item heading="Sección">Contenido</x-tabler::accordion.item>');
+
+        // Solo verificamos que renderiza sin lanzar excepción y muestra su contenido.
+        $vista->assertSee('Contenido');
+    }
 }
