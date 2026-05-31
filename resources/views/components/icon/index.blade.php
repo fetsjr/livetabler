@@ -1,9 +1,11 @@
-@php
-    $name = $name ?? 'help';
-    $size = $size ?? 18;
-    $stroke = $stroke ?? 2;
-    $class = $class ?? '';
-@endphp
+@props([
+    // Nombre del icono Tabler (webfont), SIN el prefijo "ti-". Ej: name="home".
+    'name' => 'help',
 
-<i {{ $attributes->merge(['class' => "icon ti ti-{$name} " . $class]) }} 
-   style="font-size: {{ $size }}px; stroke-width: {{ $stroke }};"></i>
+    // Tamaño del icono en píxeles (se aplica como font-size).
+    'size' => 18,
+])
+
+{{-- Icono de la fuente Tabler Icons. Fusiona las clases y estilos del consumidor
+     en un único atributo, sin duplicar class. --}}
+<i {{ $attributes->class(['icon', 'ti', 'ti-'.$name])->merge(['style' => 'font-size:'.$size.'px']) }}></i>

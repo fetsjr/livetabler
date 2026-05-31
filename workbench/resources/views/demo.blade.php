@@ -26,6 +26,16 @@
                 <x-tabler::button as="a" href="#">Como enlace</x-tabler::button>
             </div>
         </div>
+        {{-- Sección: iconos --}}
+        <div class="card mt-4">
+            <div class="card-header"><h3 class="card-title">Icono</h3></div>
+            <div class="card-body d-flex flex-wrap gap-3 align-items-center fs-2">
+                <x-tabler::icon name="home" />
+                <x-tabler::icon name="user" />
+                <x-tabler::icon name="settings" :size="32" />
+                <x-tabler::icon name="heart" class="text-red" />
+            </div>
+        </div>
     </div>
     {{-- Inyecta el JS de Tabler publicado --}}
     @tablerScripts
