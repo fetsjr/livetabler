@@ -1,3 +1,2 @@
-<div {{ $attributes->class(['input-group-text small text-muted']) }}>
-    {{ $slot }}
-</div>
+{{-- Texto/icono adyacente genérico de un input-group. --}}
+<span {{ $attributes->class(['input-group-text']) }}>{{ $slot }}</span>
