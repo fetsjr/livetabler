@@ -1,14 +1,17 @@
 @props([
-    'name' => null, // The identifier that triggers this panel
+    // Identificador del panel. Debe coincidir con el "name" de la pestaña que lo activa.
+    'name' => null,
 ])
 
-<div 
-    x-show="activeTab === '{{ $name }}'"
-    class="tab-pane"
-    :class="{ 'active show': activeTab === '{{ $name }}' }"
-    :aria-hidden="activeTab !== '{{ $name }}'"
+{{-- Panel de contenido. Raíz <div class="tab-pane"> que fusiona las clases del consumidor.
+     Alpine controla la visibilidad (x-show) y las clases active/show de Tabler. --}}
+<div
+    x-show="activeTab === @js($name)"
+    x-cloak
+    :class="{ 'active show': activeTab === @js($name) }"
+    :aria-hidden="activeTab !== @js($name)"
     role="tabpanel"
-    {{ $attributes }}
+    {{ $attributes->class(['tab-pane']) }}
 >
     {{ $slot }}
 </div>

@@ -53,6 +53,32 @@
                     :options="['mx' => 'México', 'es' => 'España', 'ar' => 'Argentina']" />
             </div>
         </div>
+
+        {{-- Sección: pestañas (tabs) controladas por Alpine --}}
+        <div class="card mt-4">
+            <div class="card-header"><h3 class="card-title">Pestañas</h3></div>
+            <div class="card-body">
+                <x-tabler::tabs default="inicio">
+                    <x-tabler::tab.group>
+                        <x-tabler::tab name="inicio">Inicio</x-tabler::tab>
+                        <x-tabler::tab name="perfil">Perfil</x-tabler::tab>
+                        <x-tabler::tab name="ajustes">Ajustes</x-tabler::tab>
+                    </x-tabler::tab.group>
+
+                    <x-tabler::tab.panels class="mt-3">
+                        <x-tabler::tab.panel name="inicio">
+                            Contenido de la pestaña <strong>Inicio</strong>.
+                        </x-tabler::tab.panel>
+                        <x-tabler::tab.panel name="perfil">
+                            Contenido de la pestaña <strong>Perfil</strong>.
+                        </x-tabler::tab.panel>
+                        <x-tabler::tab.panel name="ajustes">
+                            Contenido de la pestaña <strong>Ajustes</strong>.
+                        </x-tabler::tab.panel>
+                    </x-tabler::tab.panels>
+                </x-tabler::tabs>
+            </div>
+        </div>
     </div>
     {{-- Inyecta el JS de Tabler publicado --}}
     @tablerScripts
