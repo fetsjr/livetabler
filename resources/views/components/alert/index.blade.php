@@ -44,6 +44,6 @@
 
     {{-- Botón de cierre (solo si la alerta es descartable) --}}
     @if ($dismissible)
-        <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
     @endif
 </div>
