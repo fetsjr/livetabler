@@ -1,3 +1,5 @@
-<div {{ $attributes->class(['px-3 py-2 small fw-semibold text-muted']) }}>
+{{-- Encabezado de seccion dentro del menu desplegable de Tabler.
+     Fusiona las clases del consumidor una sola vez. --}}
+<h6 {{ $attributes->class(['dropdown-header']) }}>
     {{ $slot }}
-</div>
+</h6>
