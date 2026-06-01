@@ -1,23 +1,30 @@
 @props([
+    // Estado marcado inicial.
     'checked' => false,
+
+    // Atributo name del input (para envio en formularios o filtros).
     'name' => null,
+
+    // Atributo value del input.
     'value' => null,
+
+    // Deshabilita el item.
+    'disabled' => false,
 ])
 
-<button
-    type="button"
-    x-data="{ checked: @js($checked) }"
-    @click="checked = !checked"
-    {{ $attributes->class(['dropdown-item d-flex align-items-center gap-2']) }}
->
-    <span
-        class="d-flex align-items-center justify-content-center rounded border"
-        style="width: 1rem; height: 1rem;"
-        :class="checked ? 'bg-primary border-primary text-white' : 'border-secondary'"
+{{-- Item de menu con checkbox, segun el patron de Tabler: un label con clase
+     dropdown-item que envuelve un input form-check-input. El estado usa los
+     atributos nativos de HTML (no Alpine) porque el patron de filtros de Tabler
+     envia inputs reales en el formulario. Las clases del consumidor se fusionan
+     en el label (elemento raiz). --}}
+<label {{ $attributes->class(['dropdown-item', 'disabled' => $disabled]) }}>
+    <input
+        class="form-check-input m-0 me-2"
+        type="checkbox"
+        @if ($name) name="{{ $name }}" @endif
+        @if ($value !== null) value="{{ $value }}" @endif
+        @checked($checked)
+        @disabled($disabled)
     >
-        <svg x-show="checked" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-        </svg>
-    </span>
-    <span>{{ $slot }}</span>
-</button>
+    {{ $slot }}
+</label>
