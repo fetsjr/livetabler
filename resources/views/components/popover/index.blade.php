@@ -1,44 +1,78 @@
 @props([
-    'position' => 'bottom-start',
-    'trigger' => null,
+    // Lado donde aparece el panel respecto al disparador.
+    // Valores publicos (en ingles): 'top' | 'bottom' | 'left' | 'right'.
+    'position' => 'bottom',
 ])
 
 @php
-    $alignmentClasses = match ($position) {
-        'bottom-end' => 'top-100 end-0 mt-2',
-        'top-start' => 'bottom-100 start-0 mb-2',
-        'top-end' => 'bottom-100 end-0 mb-2',
-        'right-start' => 'start-100 top-0 ms-2',
-        'left-start' => 'end-100 top-0 me-2',
-        default => 'top-100 start-0 mt-2', // bottom-start
+    // Traducimos la posicion publica al sufijo de Tabler/Bootstrap (start/end en vez de left/right)
+    // para construir la clase direccional bs-popover-* que dibuja el arrow en el lado correcto.
+    $direccion = match ($position) {
+        'top'   => 'top',
+        'left'  => 'start',
+        'right' => 'end',
+        default => 'bottom',
+    };
+
+    // Clase direccional nativa de Bootstrap 5 que posiciona el arrow del popover.
+    $claseDireccion = 'bs-popover-'.$direccion;
+
+    // Como este popover es Alpine (sin Popper.js), posicionamos el panel a mano con utilidades
+    // de Bootstrap. Cada lado fija el anclaje y un pequeno margen de separacion del disparador.
+    $clasesPosicion = match ($position) {
+        'top'   => 'bottom-100 start-50 translate-middle-x mb-2',
+        'left'  => 'end-100 top-50 translate-middle-y me-2',
+        'right' => 'start-100 top-50 translate-middle-y ms-2',
+        default => 'top-100 start-50 translate-middle-x mt-2', // bottom
     };
 @endphp
 
-<div 
-    x-data="{ open: false }" 
-    @keydown.escape.window="open = false" 
-    class="position-relative d-inline-block text-start"
+{{-- Contenedor relativo: ancla el panel absoluto y agrupa el estado Alpine.
+     La tecla Escape cierra el popover; el click fuera lo cierra desde el propio panel. --}}
+<div
+    x-data="{ open: false }"
+    @keydown.escape.window="open = false"
+    {{ $attributes->class(['popover-container', 'position-relative', 'd-inline-block']) }}
 >
-    <!-- Trigger -->
-    @if ($trigger)
-        <div @click="open = !open" role="button" aria-haspopup="dialog" :aria-expanded="open.toString()">
+    {{-- Disparador: solo se renderiza si el consumidor pasa el slot trigger.
+         Togglea el estado y expone semantica accesible de popover. --}}
+    @isset($trigger)
+        <div
+            @click="open = ! open"
+            role="button"
+            aria-haspopup="dialog"
+            :aria-expanded="open.toString()"
+        >
             {{ $trigger }}
         </div>
-    @endif
+    @endisset
 
-    <!-- Popover Container -->
-    <div 
-        x-show="open" 
+    {{-- Panel del popover: clases nativas de Tabler (popover, bs-popover-*, popover-arrow,
+         popover-body). z-3 es la utilidad z-index real mas alta de Tabler; la clase popover
+         ya aporta su propio z-index via su variable CSS. --}}
+    <div
+        x-show="open"
         x-cloak
         @click.outside="open = false"
-        {{ $attributes->class(['position-absolute z-index-dropdown p-4 card shadow-xl border-1', $alignmentClasses]) }}
-        style="width: max-content; max-width: 350px;"
+        @class([
+            'popover',
+            $claseDireccion,
+            $clasesPosicion,
+            'position-absolute',
+            'z-3',
+            'shadow',
+        ])
         role="dialog"
     >
-        @if ($trigger)
+        <div class="popover-arrow"></div>
+
+        {{-- Cabecera opcional del popover (slot con nombre header). --}}
+        @isset($header)
+            <div class="popover-header">{{ $header }}</div>
+        @endisset
+
+        <div class="popover-body">
             {{ $slot }}
-        @else
-            <span class="text-danger small">A trigger named slot is required for Tabler Popover</span>
-        @endif
+        </div>
     </div>
 </div>
