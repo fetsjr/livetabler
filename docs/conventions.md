@@ -76,9 +76,15 @@ navegador descarta el del consumidor.
   @endif
   ```
 
-## 9. JavaScript
-- Si un componente necesita JS de Tabler, debe auto-inicializarse cuando la librería esté
-  presente en la página (sin configuración manual del consumidor).
+## 9. JavaScript e interactividad
+- **La interactividad se hace con Alpine.js** (estado reactivo en el cliente: `x-data`, `x-show`,
+  `x-on:click`/`@click`, `:class`...). Alpine ya viene incluido con Livewire 3, así que está
+  disponible sin añadir dependencias. Este es el enfoque para tabs, dropdowns avanzados, popover,
+  toast, menú, etc.
+- Para widgets que dependan de una librería externa (datepicker, select enriquecido, charts...),
+  el componente debe auto-inicializar esa librería si está presente en la página
+  (`if (window.LaLibreria) { ... }`), sin configuración manual del consumidor.
+- El CSS y los estilos siguen siendo de Tabler/Bootstrap 5; Alpine solo aporta el comportamiento.
 
 ## 10. Origen del markup
 - Cada componente se escribe desde la **documentación de Tabler**, nunca adaptando el Blade de Flux.
