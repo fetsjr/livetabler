@@ -31,8 +31,15 @@ class MenuTest extends TestCase
 
     public function test_menu_muestra_show(): void
     {
+        // Subcadena CONTIGUA real: la clase 'show' va junto a 'dropdown-menu', no aislada.
         $this->blade('<x-tabler::menu :show="true">X</x-tabler::menu>')
-            ->assertSee('show', false);
+            ->assertSee('dropdown-menu show', false);
+    }
+
+    public function test_menu_tiene_role_menu(): void
+    {
+        $this->blade('<x-tabler::menu>X</x-tabler::menu>')
+            ->assertSee('role="menu"', false);
     }
 
     public function test_menu_fusiona_clases_del_consumidor(): void
@@ -86,13 +93,41 @@ class MenuTest extends TestCase
 
     public function test_item_boton_disabled_nativo(): void
     {
+        // Atributo nativo concreto, no la subcadena ambigua 'disabled' (que tambien casa con la clase).
         $this->blade('<x-tabler::menu.item :disabled="true">X</x-tabler::menu.item>')
-            ->assertSee('disabled', false);
+            ->assertSee('disabled="disabled"', false);
+    }
+
+    public function test_item_tiene_role_menuitem(): void
+    {
+        $this->blade('<x-tabler::menu.item>X</x-tabler::menu.item>')
+            ->assertSee('role="menuitem"', false);
+    }
+
+    public function test_item_enlace_activo_emite_aria_current_page(): void
+    {
+        $this->blade('<x-tabler::menu.item href="/x" :active="true">X</x-tabler::menu.item>')
+            ->assertSee('aria-current="page"', false);
+    }
+
+    public function test_item_boton_activo_emite_aria_current_true(): void
+    {
+        $this->blade('<x-tabler::menu.item :active="true">X</x-tabler::menu.item>')
+            ->assertSee('aria-current="true"', false);
+    }
+
+    public function test_item_inactivo_no_emite_aria_current(): void
+    {
+        $this->blade('<x-tabler::menu.item>X</x-tabler::menu.item>')
+            ->assertDontSee('aria-current', false);
     }
 
     public function test_item_con_shortcut(): void
     {
+        // El marcado real del atajo: span con 'dropdown-item-indicator' y 'ms-auto', no solo la letra.
         $this->blade('<x-tabler::menu.item shortcut="K">X</x-tabler::menu.item>')
+            ->assertSee('dropdown-item-indicator', false)
+            ->assertSee('ms-auto', false)
             ->assertSee('K', false);
     }
 
@@ -209,5 +244,21 @@ class MenuTest extends TestCase
         // Subcadena CONTIGUA: ultima clase base 'position-relative' + clase del consumidor.
         $this->blade('<x-tabler::menu.submenu heading="X" class="my-1">y</x-tabler::menu.submenu>')
             ->assertSee('position-relative my-1', false);
+    }
+
+    public function test_submenu_sin_heading_renderiza_contenido_una_sola_vez(): void
+    {
+        // CRITICO: sin heading, el contenido del slot (los items hijos) debe aparecer
+        // EXACTAMENTE una vez (en el menu hijo) y NUNCA dentro del <button> disparador.
+        $html = $this->blade(
+            '<x-tabler::menu.submenu><x-tabler::menu.item>Hijo</x-tabler::menu.item></x-tabler::menu.submenu>'
+        )->__toString();
+
+        // El texto del hijo aparece una sola vez (no duplicado por doble render de $slot).
+        $this->assertSame(1, substr_count($html, 'Hijo'));
+
+        // El contenido del slot NO esta anidado dentro del <button> disparador (markup invalido).
+        $disparador = substr($html, strpos($html, '<button'), strpos($html, '</button>') - strpos($html, '<button'));
+        $this->assertStringNotContainsString('Hijo', $disparador);
     }
 }

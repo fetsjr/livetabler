@@ -23,7 +23,7 @@
         'dropdown-menu-end' => $end,     // alineacion al final
         'dropdown-menu-arrow' => $arrow, // puntero/flecha
         'show' => $show,                 // forzar visible
-    ])->merge($dark ? ['data-bs-theme' => 'dark'] : []) }}
+    ])->merge(['role' => 'menu'] + ($dark ? ['data-bs-theme' => 'dark'] : [])) }}
 >
     {{ $slot }}
 </div>

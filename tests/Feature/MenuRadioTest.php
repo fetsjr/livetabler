@@ -35,8 +35,10 @@ class MenuRadioTest extends TestCase
 
     public function test_radio_deshabilitado(): void
     {
-        $this->blade('<x-tabler::menu.radio :disabled="true">Asc</x-tabler::menu.radio>')
-            ->assertSee('disabled', false);
+        // El atributo disabled debe ir EN el <input> (no solo la clase del label).
+        $html = $this->blade('<x-tabler::menu.radio :disabled="true">Asc</x-tabler::menu.radio>')->__toString();
+
+        $this->assertMatchesRegularExpression('/<input\b[^>]*\btype="radio"[^>]*\bdisabled\b/s', $html);
     }
 
     public function test_radio_fusiona_clases_del_consumidor(): void

@@ -35,8 +35,10 @@ class MenuCheckboxTest extends TestCase
 
     public function test_checkbox_deshabilitado(): void
     {
-        $this->blade('<x-tabler::menu.checkbox :disabled="true">A</x-tabler::menu.checkbox>')
-            ->assertSee('disabled', false);
+        // El atributo disabled debe ir EN el <input> (no solo la clase del label).
+        $html = $this->blade('<x-tabler::menu.checkbox :disabled="true">A</x-tabler::menu.checkbox>')->__toString();
+
+        $this->assertMatchesRegularExpression('/<input\b[^>]*\btype="checkbox"[^>]*\bdisabled\b/s', $html);
     }
 
     public function test_checkbox_fusiona_clases_del_consumidor(): void

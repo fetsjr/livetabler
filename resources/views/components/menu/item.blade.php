@@ -37,6 +37,11 @@
     if ($tag === 'button' && $disabled) {
         $atributosEtiqueta['disabled'] = 'disabled';
     }
+
+    // Rol de item de menu (ARIA) y marca de item activo. El valor null hace que Blade
+    // OMITA el atributo cuando no aplica: 'page' para enlaces, 'true' para botones.
+    $atributosEtiqueta['role'] = 'menuitem';
+    $atributosEtiqueta['aria-current'] = $active ? ($tag === 'a' ? 'page' : 'true') : null;
 @endphp
 
 {{-- Item del menu desplegable de Tabler. Fusiona las clases del consumidor una sola vez. --}}
