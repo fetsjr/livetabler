@@ -1,44 +1,42 @@
-@php
-    $classes = 'card';
-    
-    if ($sm ?? false) $classes .= ' card-sm';
-    if ($stacked ?? false) $classes .= ' card-stacked';
+@props([
+    // Tarjeta compacta (menos padding).
+    'sm' => false,
+    // Tarjeta apilable (para superponer un estado de fondo).
+    'stacked' => false,
+    // Color de Tabler para la barra de estado superior (success, danger...). Null = sin barra.
+    'status' => null,
+    // Título mostrado en la cabecera de la tarjeta.
+    'title' => null,
+])
 
-    $attributes = $attributes->class([$classes]);
-@endphp
-
-<div {{ $attributes }}>
-    @if ($status ?? null)
+<div {{ $attributes->class(['card', 'card-sm' => $sm, 'card-stacked' => $stacked]) }}>
+    {{-- Barra de estado superior de color --}}
+    @if ($status)
         <div class="card-status-top bg-{{ $status }}"></div>
     @endif
 
-    @if (($title ?? null) || ($header ?? null) || ($actions ?? null))
+    {{-- Cabecera: se muestra si hay título, slot header o acciones --}}
+    @if ($title || isset($header) || isset($actions))
         <div class="card-header">
-            @if ($title ?? null)
+            @if ($title)
                 <h3 class="card-title">{{ $title }}</h3>
             @endif
-            
             {{ $header ?? '' }}
-
-            @if ($actions ?? null)
-                <div class="card-actions">
-                    {{ $actions }}
-                </div>
-            @endif
+            @isset($actions)
+                <div class="card-actions">{{ $actions }}</div>
+            @endisset
         </div>
     @endif
 
-    @if ($body ?? null)
-        <div class="card-body">
-            {{ $body }}
-        </div>
+    {{-- Cuerpo: usa el slot 'body' si existe; si no, el contenido por defecto --}}
+    @isset($body)
+        <div class="card-body">{{ $body }}</div>
     @else
         {{ $slot }}
-    @endif
+    @endisset
 
-    @if ($footer ?? null)
-        <div class="card-footer">
-            {{ $footer }}
-        </div>
-    @endif
+    {{-- Pie opcional --}}
+    @isset($footer)
+        <div class="card-footer">{{ $footer }}</div>
+    @endisset
 </div>
