@@ -1,31 +1,18 @@
-@php
-    $position = $position ?? 'top';
-    $color = $color ?? 'primary';
-    $bookmark = $bookmark ?? false;
-@endphp
+@props([
+    // Posición de la cinta: 'top', 'bottom', 'start', 'end', 'top-start'...
+    'position' => 'top',
+    // Color de fondo de Tabler (bg-{color}).
+    'color' => 'primary',
+    // Estilo "marcador" (ribbon-bookmark).
+    'bookmark' => false,
+])
 
-<div @class([
+{{-- Cinta decorativa de Tabler. Fusiona las clases del consumidor. --}}
+<div {{ $attributes->class([
     'ribbon',
     'ribbon-bookmark' => $bookmark,
-    'ribbon-' . $position,
-    'bg-' . $color,
-]) {{ $attributes }}>
+    'ribbon-'.$position,
+    'bg-'.$color,
+]) }}>
     {{ $slot }}
 </div>
-
-@php
-    $id = $id ?? 'dt-' . Str::random(8);
-    $columns = $columns ?? [];
-    $url = $url ?? null;
-    $searchable = $searchable ?? true;
-    $paginated = $paginated ?? true;
-@endphp
-
-@php
-    $id = $id ?? 'chart-' . Str::random(8);
-    $type = $type ?? 'line';
-    $height = $height ?? '350';
-    $options = $options ?? [];
-@endphp
-
-<div id="{{ $id }}" style="min-height: {{ $height }}px;" {{ $attributes }}></div>
