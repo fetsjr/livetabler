@@ -1,13 +1,11 @@
-<main class="page-body">
-    @php
-    $fluid = $fluid ?? false;
-@endphp
+@props([
+    // Si true usa contenedor fluido (ancho completo) en vez de container-xl.
+    'fluid' => false,
+])
 
-<div @class([
-    'page-body',
-    'container-xl' => !$fluid,
-    'container-fluid' => $fluid,
-]) {{ $attributes }}>
+{{-- Zona de contenido principal de la página. El contenedor controla el ancho. --}}
+<div {{ $attributes->class(['page-body']) }}>
+    <div @class(['container-xl' => ! $fluid, 'container-fluid' => $fluid])>
         {{ $slot }}
     </div>
-</main>
+</div>
