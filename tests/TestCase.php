@@ -2,6 +2,7 @@
 
 namespace Tabler\Tests;
 
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tabler\TablerServiceProvider;
@@ -23,6 +24,7 @@ class TestCase extends BaseTestCase
     protected function getPackageProviders($app): array
     {
         return [
+            LivewireServiceProvider::class,
             TablerServiceProvider::class,
         ];
     }
