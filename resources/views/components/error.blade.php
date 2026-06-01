@@ -1,22 +1,25 @@
 @props([
+    // Bolsa de errores a consultar (por defecto 'default').
     'bag' => 'default',
+    // Mensaje explícito a mostrar (tiene prioridad sobre el de validación).
     'message' => null,
+    // Campo cuyo error de validación se mostrará si no se pasa 'message'.
     'name' => null,
 ])
 
 @php
-    $errorBag = $errors->getBag($bag);
-    $message = $message ?? ($name ? $errorBag->first($name) : null);
-    
-    if ($name && (is_null($message) || $message === '')) {
-        $message = $errorBag->first($name . '.*');
-    }
+    // Obtenemos el mensaje de forma robusta: si $errors no está compartido (render aislado),
+    // no fallamos y simplemente no hay mensaje.
+    $bolsa = isset($errors) ? $errors->getBag($bag) : null;
+    $mensaje = $message ?? ($name && $bolsa ? $bolsa->first($name) : null);
 
-    $classes = "mt-1 small text-danger " . ($message ? 'd-block' : 'd-none');
+    // Si no hubo coincidencia exacta, probamos con campos anidados (name.*).
+    if ($name && $bolsa && ($mensaje === null || $mensaje === '')) {
+        $mensaje = $bolsa->first($name.'.*');
+    }
 @endphp
 
-<div role="alert" {{ $attributes->class([$classes]) }} data-tabler-error>
-    @if ($message)
-        {{ $message }}
-    @endif
+{{-- Muestra el mensaje de error de validación de un campo. Se oculta si no hay error. --}}
+<div role="alert" {{ $attributes->class(['mt-1', 'small', 'text-danger', 'd-block' => $mensaje, 'd-none' => ! $mensaje]) }} data-tabler-error>
+    @if ($mensaje){{ $mensaje }}@endif
 </div>
