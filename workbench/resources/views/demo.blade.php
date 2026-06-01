@@ -44,6 +44,15 @@
                 <x-tabler::input name="correo" type="email" label="Correo" icon="mail" description="No lo compartiremos." />
             </div>
         </div>
+
+        {{-- Sección: select --}}
+        <div class="card mt-4">
+            <div class="card-header"><h3 class="card-title">Select</h3></div>
+            <div class="card-body">
+                <x-tabler::select name="pais" label="País" placeholder="Elige un país"
+                    :options="['mx' => 'México', 'es' => 'España', 'ar' => 'Argentina']" />
+            </div>
+        </div>
     </div>
     {{-- Inyecta el JS de Tabler publicado --}}
     @tablerScripts
