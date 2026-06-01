@@ -1,66 +1,50 @@
+@props([
+    // Tipo de layout. Ajusta la clase del contenedor .page:
+    //  'boxed' -> layout-boxed, 'fluid' -> layout-fluid, cualquier otro -> sin modificador.
+    'type' => 'vertical',
+    // Texto de marca usado en el copyright por defecto del pie.
+    'brand' => 'Tabler',
+])
+
 @php
-    $type = $type ?? 'vertical';
-    $sticky = $sticky ?? false;
-    $overlap = $overlap ?? false;
-    $theme = $theme ?? 'light';
+    // Modificador de ancho del contenedor principal.
+    $claseTipo = match ($type) {
+        'boxed' => 'layout-boxed',
+        'fluid' => 'layout-fluid',
+        default => '',
+    };
 @endphp
 
-<div @class([
-    'page',
-    'page-wrapper' => $type === 'horizontal' || $type === 'boxed' || $type === 'fluid',
-])>
-    @if ($type === 'vertical' || $type === 'combo' || $type === 'condensed')
-        @php
-            $theme = $theme ?? 'dark';
-            $logo = $logo ?? null;
-            $brand = $brand ?? 'Tabler';
-        @endphp
-
-        <aside @class([
-            'navbar navbar-vertical navbar-expand-lg',
-            'navbar-dark' => $theme === 'dark',
-            'navbar-light' => $theme === 'light',
-        ]) data-bs-theme="{{ $theme }}">
-            {{ $sidebar ?? '' }}
-        </aside>
-    @endif
+{{-- Contenedor raíz de la página. Fusiona las clases del consumidor.
+     El modificador de tipo solo se añade si existe, para no dejar espacios sobrantes. --}}
+<div {{ $attributes->class(['page', $claseTipo => $claseTipo !== '']) }}>
+    {{-- Barra lateral (un <x-tabler::sidebar>), opcional --}}
+    {{ $sidebar ?? '' }}
 
     <div class="page-wrapper">
-        @if ($type === 'horizontal' || $type === 'combo' || $type === 'boxed' || $type === 'fluid' || $type === 'navbar-overlap')
-            {{ $navbar ?? '' }}
-        @endif
+        {{-- Barra superior (un <x-tabler::navbar>), opcional --}}
+        {{ $navbar ?? '' }}
 
-        @php
-            $title = $title ?? null;
-            $subtitle = $subtitle ?? null;
-        @endphp
+        {{-- Contenido de la página (usa <x-tabler::page-header> y <x-tabler::page-body> dentro) --}}
+        {{ $slot }}
 
-        <div class="page-header d-print-none" {{ $attributes }}>
-            {{ $slot }}
-        </div>
-
+        {{-- Pie de página --}}
         <footer class="footer footer-transparent d-print-none">
-            <div @class([
-                'container-xl' => $type !== 'fluid',
-                'container-fluid' => $type === 'fluid',
-            ])>
-                <div class="row text-center align-items-center flex-row-reverse">
-                    <div class="col-lg-auto ms-lg-auto">
-                        <ul class="list-inline list-inline-dots mb-0">
-                            <li class="list-inline-item"><a href="#" class="link-secondary">Documentación</a></li>
-                            <li class="list-inline-item"><a href="#" class="link-secondary">Soporte</a></li>
-                        </ul>
+            <div class="container-xl">
+                @isset($footer)
+                    {{ $footer }}
+                @else
+                    <div class="row text-center align-items-center">
+                        <div class="col-12">
+                            <ul class="list-inline list-inline-dots mb-0">
+                                <li class="list-inline-item">
+                                    Copyright &copy; {{ date('Y') }}
+                                    <span class="link-secondary">{{ $brand }}</span>.
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                        <ul class="list-inline list-inline-dots mb-0">
-                            <li class="list-inline-item">
-                                Copyright &copy; {{ date('Y') }}
-                                <a href="." class="link-secondary">Tabler</a>.
-                                Todos los derechos reservados.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                @endisset
             </div>
         </footer>
     </div>
