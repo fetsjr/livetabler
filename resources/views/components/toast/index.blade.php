@@ -1,32 +1,80 @@
-<div 
-    x-data="{ 
-        toasts: [],
-        add(toast) {
-            toast.id = Date.now();
-            this.toasts.push(toast);
-            setTimeout(() => { this.remove(toast.id) }, toast.timeout || 4000);
-        },
-        remove(id) {
-            this.toasts = this.toasts.filter(t => t.id !== id);
+@props([
+    // Titulo mostrado en la cabecera (toast-header). Si es null o vacio no se renderiza cabecera.
+    'title' => null,
+
+    // Texto secundario a la derecha de la cabecera (p. ej. "11 mins ago"). Opcional.
+    'meta' => null,
+
+    // Punto de color a la izquierda del titulo: color de Tabler (primary, success, danger...).
+    // Null = sin punto de color.
+    'color' => null,
+
+    // Si es true, el toast se cierra solo tras 'delay' ms. Si es false, permanece hasta cerrarlo.
+    'autohide' => true,
+
+    // Milisegundos antes del auto-cierre cuando autohide es true.
+    'delay' => 5000,
+
+    // Si es true, muestra el boton de cierre (btn-close) en la cabecera.
+    'dismissible' => true,
+])
+
+@php
+    // Renderizamos cabecera solo si hay titulo (la cabecera de Tabler gira en torno al titulo).
+    $tieneCabecera = ! empty($title);
+
+    // Normalizamos a entero el retardo para inyectarlo seguro en el x-data de Alpine.
+    $retardo = (int) $delay;
+@endphp
+
+{{-- Toast individual de Tabler. El comportamiento (mostrar/ocultar/auto-cierre) lo controla
+     Alpine localmente; el estilo es 100% Tabler (clases toast/toast-header/toast-body).
+     Como en CSS un toast sin la clase show queda oculto, ligamos la clase show a x-show
+     mediante :class para que sea visible mientras Alpine lo mantenga abierto. --}}
+<div
+    x-data="{
+        visible: true,
+        autohide: {{ $autohide ? 'true' : 'false' }},
+        delay: {{ $retardo }},
+        dismiss() { this.visible = false; },
+        init() {
+            if (this.autohide && this.delay > 0) {
+                setTimeout(() => this.dismiss(), this.delay);
+            }
         }
     }"
-    @toast-show.window="add($event.detail)"
-    class="position-fixed bottom-0 end-0 z-index-toast p-4 d-flex flex-column gap-2"
-    style="pointer-events: none; width: auto; max-width: 400px;"
+    x-show="visible"
+    x-transition.opacity
+    :class="{ 'show': visible }"
+    {{ $attributes->class(['toast'])->merge([
+        'role' => 'alert',
+        'aria-live' => 'assertive',
+        'aria-atomic' => 'true',
+    ]) }}
 >
-    <template x-for="toast in toasts" :key="toast.id">
-        <div 
-            class="toast show shadow-lg border-1 pointer-events-auto"
-            role="alert" 
-            aria-live="assertive" 
-            aria-atomic="true"
-        >
-            <div class="toast-header">
-                <span :class="{ 'bg-success': toast.type === 'success', 'bg-danger': toast.type === 'error', 'bg-info': !toast.type }" class="p-2 me-2 rounded"></span>
-                <strong class="me-auto" x-text="toast.title"></strong>
-                <button type="button" @click="remove(toast.id)" class="btn-close" aria-label="Close"></button>
-            </div>
-            <div class="toast-body" x-show="toast.text" x-text="toast.text"></div>
+    {{-- Cabecera: punto de color opcional + titulo + meta + boton de cierre. --}}
+    @if ($tieneCabecera)
+        <div class="toast-header">
+            @if ($color)
+                {{-- Punto de color a la izquierda del titulo. --}}
+                <span class="bg-{{ $color }} rounded me-2" style="width: 1rem; height: 1rem;"></span>
+            @endif
+            <strong class="me-auto">{{ $title }}</strong>
+            @if ($meta)
+                <small class="text-secondary">{{ $meta }}</small>
+            @endif
+            @if ($dismissible)
+                <button type="button" class="ms-2 btn-close" aria-label="Close" @click="dismiss()"></button>
+            @endif
         </div>
-    </template>
+    @endif
+
+    {{-- Cuerpo del toast: contenido del slot. --}}
+    <div class="toast-body">
+        {{ $slot }}
+        {{-- Si NO hay cabecera pero si boton de cierre, lo mostramos junto al cuerpo. --}}
+        @if (! $tieneCabecera && $dismissible)
+            <button type="button" class="ms-2 btn-close float-end" aria-label="Close" @click="dismiss()"></button>
+        @endif
+    </div>
 </div>
