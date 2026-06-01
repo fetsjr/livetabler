@@ -16,6 +16,11 @@ cópialo como punto de partida.
 
 ## 3. Comentarios
 - **Siempre en español**, explicando *qué hace* cada prop y cada bloque de lógica.
+- **OJO (sharp edge):** NO escribas literales que Blade compila dentro de comentarios `{{-- --}}`,
+  `@php // ... ` ni docblocks de `@props`: el precompilador de Blade reescribe las etiquetas de
+  componente (`<x-tabler::tab>`, `<x-...>`) y las directivas (`@foreach`, `@if`...) aunque estén
+  "comentadas", y eso rompe el render con errores como "Undefined variable $component". Describe la
+  sintaxis en prosa (p.ej. "el name del panel asociado") en vez de incrustar la etiqueta literal.
 
 ## 4. Estructura interna (en este orden)
 1. `@props([...])` con un comentario por prop.
