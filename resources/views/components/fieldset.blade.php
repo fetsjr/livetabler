@@ -1,3 +1,4 @@
-<fieldset {{ $attributes->class(['block mb-6 min-w-0']) }}>
+{{-- Agrupa campos de formulario relacionados. --}}
+<fieldset {{ $attributes->class(['mb-3']) }}>
     {{ $slot }}
 </fieldset>
