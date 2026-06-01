@@ -1,25 +1,34 @@
+@props([
+    // Atributo name del radio (compartido por el grupo).
+    'name' => '',
+    // Valor de esta opción.
+    'value' => '1',
+    // Si arranca seleccionado.
+    'checked' => false,
+    // Texto de la etiqueta.
+    'label' => null,
+    // Texto descriptivo.
+    'description' => null,
+])
+
 @php
-    $name = $name ?? '';
-    $value = $value ?? '1';
-    $label = $label ?? null;
-    $description = $description ?? null;
-    $id = ($name ?: 'radio') . '_' . $value;
+    // id único combinando el name del grupo y el valor de la opción.
+    $id = ($name ?: 'radio').'_'.$value;
 @endphp
 
-<label {{ $attributes->merge(['class' => 'form-check']) }}>
+<label {{ $attributes->whereDoesntStartWith('wire:model')->class(['form-check']) }}>
     <input
         type="radio"
-        value="{{ $value }}"
         class="form-check-input"
-        @if ($name) name="{{ $name }}" {{ $attributes->wire('model') }} id="{{ $id }}" @endif
-    />
+        value="{{ $value }}"
+        @if ($name) name="{{ $name }}" id="{{ $id }}" {{ $attributes->wire('model') }} @endif
+        @checked($checked)
+    >
     @if ($label || $slot->isNotEmpty() || $description)
         <span class="form-check-label">
             {{ $label ?? $slot }}
             @if ($description)
-                <span class="form-check-description">
-                    {{ $description }}
-                </span>
+                <span class="form-check-description">{{ $description }}</span>
             @endif
         </span>
     @endif
