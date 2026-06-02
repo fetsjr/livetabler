@@ -38,4 +38,24 @@ class ToastGroupTest extends TestCase
         $this->blade('<x-tabler::toast.group class="custom" />')
             ->assertSee('end-0 custom', false);
     }
+
+    public function test_template_no_lleva_x_show_inerte(): void
+    {
+        // El div del template x-for ya es visible por la clase estatica 'toast show';
+        // un x-show="true" seria ruido inerte que nunca cambia.
+        $this->blade('<x-tabler::toast.group />')
+            ->assertSee('toast show', false)
+            ->assertDontSee('x-show="true"', false);
+    }
+
+    public function test_aria_live_dinamico_por_tipo(): void
+    {
+        // En el template x-for, role/aria-live se derivan del tipo via binding Alpine:
+        // assertive/alert para danger/error y polite/status para el resto.
+        $this->blade('<x-tabler::toast.group />')
+            ->assertSee(":aria-live=", false)
+            ->assertSee(":role=", false)
+            ->assertSee('assertive', false)
+            ->assertSee('polite', false);
+    }
 }

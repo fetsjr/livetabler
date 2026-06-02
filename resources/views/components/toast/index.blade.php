@@ -25,12 +25,20 @@
 
     // Normalizamos a entero el retardo para inyectarlo seguro en el x-data de Alpine.
     $retardo = (int) $delay;
+
+    // Accesibilidad por tipo: solo los mensajes urgentes/error interrumpen al lector
+    // de pantalla (role=alert + aria-live=assertive). El resto es no-critico (role=status
+    // + aria-live=polite), segun la guia ARIA para regiones live.
+    $esUrgente = in_array($color, ['danger', 'error'], true);
+    $rol = $esUrgente ? 'alert' : 'status';
+    $ariaLive = $esUrgente ? 'assertive' : 'polite';
 @endphp
 
 {{-- Toast individual de Tabler. El comportamiento (mostrar/ocultar/auto-cierre) lo controla
      Alpine localmente; el estilo es 100% Tabler (clases toast/toast-header/toast-body).
-     Como en CSS un toast sin la clase show queda oculto, ligamos la clase show a x-show
-     mediante :class para que sea visible mientras Alpine lo mantenga abierto. --}}
+     Una sola fuente de verdad para la visibilidad: ligamos la clase 'show' a 'visible' con
+     :class. Tabler oculta con .toast:not(.show){display:none}, asi que esa clase basta para
+     mostrar/ocultar; x-transition.opacity anima la opacidad sin competir con x-show. --}}
 <div
     x-data="{
         visible: true,
@@ -43,12 +51,11 @@
             }
         }
     }"
-    x-show="visible"
     x-transition.opacity
     :class="{ 'show': visible }"
     {{ $attributes->class(['toast'])->merge([
-        'role' => 'alert',
-        'aria-live' => 'assertive',
+        'role' => $rol,
+        'aria-live' => $ariaLive,
         'aria-atomic' => 'true',
     ]) }}
 >

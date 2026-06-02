@@ -47,11 +47,10 @@
     {{-- Toasts dinamicos generados desde el evento global de mostrar toast. --}}
     <template x-for="toast in toasts" :key="toast.id">
         <div
-            x-show="true"
             x-transition.opacity
             class="toast show"
-            role="alert"
-            aria-live="assertive"
+            :role="(toast.type === 'error' || toast.type === 'danger') ? 'alert' : 'status'"
+            :aria-live="(toast.type === 'error' || toast.type === 'danger') ? 'assertive' : 'polite'"
             aria-atomic="true"
         >
             {{-- Cabecera: solo se renderiza si el toast trae titulo. --}}

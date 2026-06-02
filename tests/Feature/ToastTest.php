@@ -45,4 +45,50 @@ class ToastTest extends TestCase
         $this->blade('<x-tabler::toast class="custom">x</x-tabler::toast>')
             ->assertSee('toast custom', false);
     }
+
+    public function test_una_sola_fuente_de_verdad_de_visibilidad(): void
+    {
+        // El toast debe usar SOLO :class="{ 'show': visible }" (Tabler oculta con :not(.show)).
+        // No debe existir un x-show redundante junto a esa clase: seria doble control del display.
+        $this->blade('<x-tabler::toast>x</x-tabler::toast>')
+            ->assertSee(":class=\"{ 'show': visible }\"", false)
+            ->assertDontSee('x-show', false);
+    }
+
+    public function test_cierre_sin_cabecera_renderiza_btn_close_en_el_cuerpo(): void
+    {
+        // Rama sin titulo: el btn-close se renderiza dentro del toast-body con float-end.
+        $this->blade('<x-tabler::toast>Solo cuerpo</x-tabler::toast>')
+            ->assertSee('toast-body', false)
+            ->assertSee('btn-close float-end', false);
+    }
+
+    public function test_sin_cabecera_y_no_dismissible_no_pinta_btn_close(): void
+    {
+        $this->blade('<x-tabler::toast :dismissible="false">Solo cuerpo</x-tabler::toast>')
+            ->assertDontSee('btn-close', false);
+    }
+
+    public function test_aria_live_assertive_para_danger(): void
+    {
+        // Mensajes urgentes/error: role=alert + aria-live=assertive.
+        $this->blade('<x-tabler::toast color="danger">x</x-tabler::toast>')
+            ->assertSee('aria-live="assertive"', false)
+            ->assertSee('role="alert"', false);
+    }
+
+    public function test_aria_live_polite_para_no_urgente(): void
+    {
+        // Info/exito no urgente: role=status + aria-live=polite.
+        $this->blade('<x-tabler::toast color="success">x</x-tabler::toast>')
+            ->assertSee('aria-live="polite"', false)
+            ->assertSee('role="status"', false);
+    }
+
+    public function test_aria_live_polite_por_defecto(): void
+    {
+        $this->blade('<x-tabler::toast>x</x-tabler::toast>')
+            ->assertSee('aria-live="polite"', false)
+            ->assertSee('role="status"', false);
+    }
 }
