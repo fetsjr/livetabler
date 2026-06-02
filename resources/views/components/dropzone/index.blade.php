@@ -1,26 +1,47 @@
+@props([
+    // Id del elemento raíz. Si no se indica se genera uno aleatorio para poder
+    // referenciarlo desde el script de inicialización.
+    'id' => null,
+
+    // URL del endpoint al que Dropzone sube los archivos.
+    'url' => '#',
+
+    // Mensaje que se muestra dentro de la zona de arrastre.
+    'message' => 'Arrastra tus archivos aquí o haz clic para subir',
+
+    // Nombre del campo (paramName) que recibe cada archivo en el servidor.
+    'name' => 'file',
+
+    // Número máximo de archivos que se pueden subir.
+    'maxFiles' => 1,
+
+    // Tipos de archivo aceptados (atributo accept de Dropzone).
+    'acceptedFiles' => 'image/*',
+])
+
 @php
-    $id = $id ?? 'dz-' . \Illuminate\Support\Str::random(8);
-    $url = $url ?? '#';
-    $message = $message ?? 'Arrastra tus archivos aquí o haz clic para subir';
-    $name = $name ?? 'file';
-    $maxFiles = $maxFiles ?? 1;
-    $acceptedFiles = $acceptedFiles ?? 'image/*';
+    // Id efectivo: el indicado por el consumidor o uno aleatorio.
+    $idEfectivo = $id ?? 'dz-' . \Illuminate\Support\Str::random(8);
 @endphp
 
-<div id="{{ $id }}" class="dropzone" data-url="{{ $url }}" {{ $attributes }}>
+{{-- La raíz fusiona la clase base 'dropzone' con las clases del consumidor y añade
+     id/data-url como atributos por defecto sobreescribibles. Un único atributo class. --}}
+<div {{ $attributes->class(['dropzone'])->merge(['id' => $idEfectivo, 'data-url' => $url]) }}>
     <div class="dz-message">
         <div class="mb-3">
-            <!-- Download SVG icon from http://tabler.io/icons/icon/upload -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-lg text-secondary" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
+            {{-- Icono de subida de Tabler --}}
+            <x-tabler::icon name="upload" class="icon-lg text-secondary" />
         </div>
         <h3>{{ $message }}</h3>
     </div>
 </div>
 
+{{-- Auto-inicialización: solo si la librería Dropzone está cargada en la página.
+     Si no lo está, el componente degrada a un <div> estático sin romper. --}}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         if (typeof Dropzone !== 'undefined') {
-            const dz = new Dropzone('#{{ $id }}', {
+            new Dropzone('#{{ $idEfectivo }}', {
                 url: '{{ $url }}',
                 paramName: '{{ $name }}',
                 maxFiles: {{ $maxFiles }},
@@ -31,8 +52,10 @@
                 dictDefaultMessage: '{{ $message }}',
                 dictMaxFilesExceeded: 'No puedes subir más archivos.',
                 dictInvalidFileType: 'Este tipo de archivo no está permitido.',
-                dictFileTooBig: 'El archivo es demasiado grande ({{ '{{' }}maxFilesize{{ '}}' }}MiB). El máximo es {{ '{{' }}maxFilesize{{ '}}' }}MiB.',
-                dictResponseError: 'Servidor respondió con código {{ '{{' }}statusCode{{ '}}' }}.',
+                @verbatim
+                dictFileTooBig: 'El archivo es demasiado grande ({{filesize}}MiB). El máximo es {{maxFilesize}}MiB.',
+                dictResponseError: 'Servidor respondió con código {{statusCode}}.',
+                @endverbatim
             });
         }
     });
