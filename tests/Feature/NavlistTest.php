@@ -63,6 +63,15 @@ class NavlistTest extends TestCase
             ->assertSee('aria-current="page"', false);
     }
 
+    public function test_activo_no_duplica_active_en_nav_link(): void
+    {
+        // Patron canonico de Tabler: 'active' vive solo en el li.nav-item; el enlace
+        // lleva aria-current="page", NO la clase 'active' (no se duplica).
+        $this->blade('<x-tabler::navlist.item href="/x" :active="true">X</x-tabler::navlist.item>')
+            ->assertDontSee('nav-link active', false)
+            ->assertSee('class="nav-link"', false);
+    }
+
     public function test_icono_y_badge(): void
     {
         $this->blade('<x-tabler::navlist.item href="/x" icon="home" badge="3">X</x-tabler::navlist.item>')
@@ -90,12 +99,30 @@ class NavlistTest extends TestCase
             ->assertSee('Administración');
     }
 
-    public function test_sin_heading_solo_emite_slot(): void
+    public function test_sin_heading_no_aplica_estilos_de_encabezado(): void
     {
-        // Sin heading no debe haber <li> de encabezado: solo el contenido del slot.
+        // Sin heading no debe haber estilos de encabezado (text-uppercase), pero
+        // si una raiz contenedora que emite el contenido del slot.
         $this->blade('<x-tabler::navlist.group><li class="nav-item">Item</li></x-tabler::navlist.group>')
             ->assertSee('Item')
             ->assertDontSee('text-uppercase', false);
+    }
+
+    public function test_group_sin_heading_fusiona_clases_del_consumidor(): void
+    {
+        // El grupo SIEMPRE tiene una raiz que absorbe los atributos del consumidor,
+        // tambien sin heading: la clase 'mb-0' debe aparecer en la raiz (no se descarta).
+        $this->blade('<x-tabler::navlist.group class="mb-0"><li class="nav-item">x</li></x-tabler::navlist.group>')
+            ->assertSee('mb-0', false)
+            ->assertDontSee('text-uppercase', false);
+    }
+
+    public function test_group_sin_heading_tiene_raiz_presentation(): void
+    {
+        // La raiz transparente lleva role="presentation" para no interferir con la
+        // semantica de la lista de navegacion.
+        $this->blade('<x-tabler::navlist.group><li class="nav-item">x</li></x-tabler::navlist.group>')
+            ->assertSee('role="presentation"', false);
     }
 
     public function test_renderiza_items_del_slot(): void

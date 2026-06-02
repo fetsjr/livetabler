@@ -6,8 +6,8 @@
     // Se muestra a la izquierda dentro de un span.nav-link-icon.
     'icon' => null,
 
-    // Marca el item como activo: anade la clase "active" al li y al enlace/boton,
-    // y el atributo aria-current="page" para accesibilidad.
+    // Marca el item como activo: anade la clase "active" SOLO al li.nav-item y el
+    // atributo aria-current="page" al enlace/boton (patron canonico de Tabler).
     'active' => false,
 
     // Texto del badge a la derecha. Acepta string simple; usa el sub-componente
@@ -22,10 +22,11 @@
 @endphp
 
 {{-- Item de navegacion: li.nav-item es el raiz que fusiona las clases del consumidor.
-     La clase "active" de Tabler vive en el li. Dentro va el enlace/boton con nav-link. --}}
+     La clase "active" de Tabler vive SOLO en el li (no se duplica en el nav-link, como
+     hace el marcado canonico de Tabler); el enlace marca el estado con aria-current. --}}
 <li {{ $attributes->class(['nav-item', 'active' => $active]) }}>
     <{{ $tag }}
-        @class(['nav-link', 'active' => $active])
+        class="nav-link"
         @if ($href) href="{{ $href }}" @else type="button" @endif
         @if ($active) aria-current="page" @endif
     >
