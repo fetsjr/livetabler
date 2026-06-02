@@ -79,6 +79,39 @@ class NavmenuTest extends TestCase
             ->assertSee('dropdown-item text-danger', false);
     }
 
+    public function test_active_anade_aria_current(): void
+    {
+        // El item activo debe marcarse accesiblemente con aria-current="page".
+        $this->blade('<x-tabler::navmenu.item href="#" :active="true">Hoy</x-tabler::navmenu.item>')
+            ->assertSee('aria-current="page"', false);
+    }
+
+    public function test_no_active_no_emite_aria_current(): void
+    {
+        // Sin active, el atributo aria-current debe omitirse (no salir vacio).
+        $this->blade('<x-tabler::navmenu.item href="#">Hoy</x-tabler::navmenu.item>')
+            ->assertDontSee('aria-current', false);
+    }
+
+    public function test_disabled_button(): void
+    {
+        // Sin href => boton: 'disabled' debe ser el atributo NATIVO, no solo la clase.
+        $this->blade('<x-tabler::navmenu.item :disabled="true">Salir</x-tabler::navmenu.item>')
+            ->assertSee('<button', false)
+            ->assertSee('disabled="disabled"', false)
+            ->assertSee('dropdown-item disabled', false);
+    }
+
+    public function test_disabled_link(): void
+    {
+        // Con href => enlace: 'disabled' funcional es aria-disabled + tabindex=-1
+        // (un <a> deshabilitado en Bootstrap es solo visual sin estos atributos).
+        $this->blade('<x-tabler::navmenu.item href="/x" :disabled="true">Perfil</x-tabler::navmenu.item>')
+            ->assertSee('aria-disabled="true"', false)
+            ->assertSee('tabindex="-1"', false)
+            ->assertSee('dropdown-item disabled', false);
+    }
+
     // --- separator ---
 
     public function test_clase_base_dropdown_divider(): void
