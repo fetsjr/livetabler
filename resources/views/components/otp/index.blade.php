@@ -1,9 +1,17 @@
 @props([
+    // Numero de cajas/caracteres del codigo OTP.
     'length' => 6,
+
+    // Campo de Livewire al que se sincroniza el codigo. Por defecto se toma del
+    // primer atributo wire:model presente (p. ej. wire:model="codigo" -> name="codigo"),
+    // de modo que el consumidor solo tiene que escribir wire:model y funciona.
     'name' => $attributes->whereStartsWith('wire:model')->first(),
 ])
 
-<div 
+{{-- Raiz: arranca el estado Alpine con todo el comportamiento OTP (foco automatico
+     a la siguiente caja, retroceso, pegado) y fusiona las clases del consumidor.
+     El wire:model NO se reemite aqui: solo se usa para resolver el name. --}}
+<div
     x-data="{
         length: {{ $length }},
         value: Array.from({ length: {{ $length }} }).fill(''),
@@ -16,7 +24,7 @@
             let val = event.target.value.toUpperCase();
             if(val.length > 1) { val = val.slice(-1); }
             this.value[index] = val;
-            
+
             if (val && index < this.length - 1) {
                 this.$refs['input' + (index + 1)].focus();
             }
@@ -32,7 +40,7 @@
             event.preventDefault();
             const pasteData = event.clipboardData.getData('text').trim().toUpperCase();
             if(!pasteData) return;
-            
+
             for(let i=0; i<this.length && i<pasteData.length; i++) {
                 this.value[i] = pasteData[i];
                 if(this.$refs['input' + i]) {
@@ -40,19 +48,21 @@
                 }
             }
             this.updateLivewire();
-            
+
             const focusIndex = Math.min(pasteData.length, this.length - 1);
             if(this.$refs['input' + focusIndex]) {
                 this.$refs['input' + focusIndex].focus();
             }
         }
     }"
-    class="d-flex align-items-center gap-2"
-    {{ $attributes->whereDoesntStartWith('wire:model') }}
+    {{ $attributes->whereDoesntStartWith('wire:model')->class([
+        'd-flex align-items-center gap-2',  // layout en fila con separacion entre cajas
+    ]) }}
 >
+    {{-- Una caja .form-control por caracter, centrada y de tamano fijo de un solo digito. --}}
     @for($i = 0; $i < $length; $i++)
-        <input 
-            type="text" 
+        <input
+            type="text"
             maxlength="2"
             x-ref="input{{ $i }}"
             :value="value[{{ $i }}]"
