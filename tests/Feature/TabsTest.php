@@ -89,6 +89,20 @@ class TabsTest extends TestCase
             ->assertSee('nav-item ms-auto', false);
     }
 
+    public function test_tab_li_es_presentation(): void
+    {
+        // Marcado oficial de Tabler: <li class="nav-item" role="presentation">.
+        $this->blade('<x-tabler::tab name="home">Inicio</x-tabler::tab>')
+            ->assertSee('role="presentation"', false);
+    }
+
+    public function test_tab_aria_controls_apunta_al_panel(): void
+    {
+        // El tab (role=tab) debe enlazar con su panel (role=tabpanel) via aria-controls.
+        $this->blade('<x-tabler::tab name="home">Inicio</x-tabler::tab>')
+            ->assertSee('aria-controls="tab-panel-home"', false);
+    }
+
     // --- Panel: <x-tabler::tab.panel name="..."> ---
 
     public function test_panel_estructura_base(): void
@@ -115,7 +129,42 @@ class TabsTest extends TestCase
     public function test_panel_fusiona_clases_del_consumidor(): void
     {
         $this->blade('<x-tabler::tab.panel name="home" class="p-3">Cuerpo</x-tabler::tab.panel>')
-            ->assertSee('tab-pane p-3', false);
+            ->assertSee('tab-pane fade p-3', false);
+    }
+
+    public function test_panel_lleva_fade(): void
+    {
+        // Marcado oficial: <div class="tab-pane fade ...">; 'show' solo surte efecto con 'fade'.
+        $this->blade('<x-tabler::tab.panel name="home">Cuerpo</x-tabler::tab.panel>')
+            ->assertSee('tab-pane fade', false);
+    }
+
+    public function test_panel_tiene_id_estable(): void
+    {
+        // El panel debe exponer un id estable derivado de 'name' para que aria-controls lo enlace.
+        $this->blade('<x-tabler::tab.panel name="home">Cuerpo</x-tabler::tab.panel>')
+            ->assertSee('id="tab-panel-home"', false);
+    }
+
+    // --- Integracion de la familia completa ---
+
+    public function test_familia_comparte_una_unica_fuente_de_verdad(): void
+    {
+        // Render conjunto: el boton del tab y el panel referencian el mismo literal 'home'
+        // (una sola fuente de verdad) y el markup se renderiza sin error.
+        $this->blade(<<<'BLADE'
+            <x-tabler::tabs default="home">
+                <x-tabler::tab.group>
+                    <x-tabler::tab name="home">Inicio</x-tabler::tab>
+                </x-tabler::tab.group>
+                <x-tabler::tab.panels>
+                    <x-tabler::tab.panel name="home">Cuerpo</x-tabler::tab.panel>
+                </x-tabler::tab.panels>
+            </x-tabler::tabs>
+            BLADE)
+            ->assertSee('aria-controls="tab-panel-home"', false)
+            ->assertSee('id="tab-panel-home"', false)
+            ->assertSee("activeTab === 'home'", false);
     }
 
     // --- Contenedor de paneles: <x-tabler::tab.panels> ---
