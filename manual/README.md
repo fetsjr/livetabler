@@ -27,8 +27,8 @@ A Flux UI-compatible component library for Laravel Livewire, built with Tailwind
 | [Input](./components/input.md) | Text input with icons, sizes, validation |
 | [Textarea](./components/textarea.md) | Multi-line text input |
 | [Select](./components/select.md) | Native and custom select dropdowns |
-| [Checkbox](./components/checkbox.md) | Checkbox with groups and variants |
-| [Radio](./components/radio.md) | Radio buttons with groups and variants |
+| [Checkbox](./components/checkbox.md) | Checkbox with groups |
+| [Radio](./components/radio.md) | Radio buttons with groups |
 | [Switch](./components/switch.md) | Toggle switch |
 | [OTP](./components/otp.md) | One-time password input |
 | [Slider](./components/slider.md) | Range slider |

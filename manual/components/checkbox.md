@@ -1,6 +1,6 @@
 # Checkbox
 
-Checkbox input with label, description, groups, and multiple display variants.
+Checkbox input with label, description, and groups.
 
 ## Basic usage
 
@@ -32,22 +32,6 @@ Checkbox input with label, description, groups, and multiple display variants.
 </tabler:checkbox.group>
 ```
 
-## Group variants
-
-```blade
-{{-- Default: stacked list --}}
-<tabler:checkbox.group variant="default">...</tabler:checkbox.group>
-
-{{-- Buttons: toggle button style --}}
-<tabler:checkbox.group variant="buttons">...</tabler:checkbox.group>
-
-{{-- Cards: selectable cards --}}
-<tabler:checkbox.group variant="cards">...</tabler:checkbox.group>
-
-{{-- Pills: pill/tag style --}}
-<tabler:checkbox.group variant="pills">...</tabler:checkbox.group>
-```
-
 ## Select all
 
 ```blade
@@ -61,7 +45,3 @@ Checkbox input with label, description, groups, and multiple display variants.
 | `tabler:checkbox.group` | Group container |
 | `tabler:checkbox.all` | Select/deselect all toggle |
 | `tabler:checkbox.indicator` | Custom check indicator |
-| `tabler:checkbox.group.variants.default` | Stacked list layout |
-| `tabler:checkbox.group.variants.buttons` | Button toggle layout |
-| `tabler:checkbox.group.variants.cards` | Card selection layout |
-| `tabler:checkbox.group.variants.pills` | Pill selection layout |
