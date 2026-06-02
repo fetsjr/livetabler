@@ -11,11 +11,11 @@
     // Texto del item. Tiene prioridad el slot; si esta vacio se usa este title.
     'title' => null,
 
-    // Atajo opcional: si se pasa un valor, renderiza un badge de notificacion
-    // sobre el item con ese contenido (p. ej. un contador).
+    // Atajo opcional: si se pasa un valor, renderiza un badge INLINE de Tabler
+    // dentro del nav-link con ese contenido (p. ej. un contador).
     'badge' => null,
 
-    // Color Tabler del badge de notificacion cuando se usa el atajo 'badge'.
+    // Color Tabler del badge cuando se usa el atajo 'badge' (text-bg-{color}).
     'badgeColor' => 'red',
 ])
 
@@ -43,9 +43,15 @@
             {{ $slot->isEmpty() ? $title : $slot }}
         </span>
 
-        {{-- Atajo de badge de notificacion sobre el item. --}}
+        {{-- Atajo de badge INLINE al estilo oficial de Tabler (no 'badge-notification'
+             absoluto: .nav-link no es position:relative, asi que se anclaria mal).
+             text-bg-{color} fija fondo y texto legible. El span visually-hidden da
+             contexto accesible al contador para lectores de pantalla. --}}
         @if ($badge !== null)
-            <x-tabler::navbar.badge :color="$badgeColor">{{ $badge }}</x-tabler::navbar.badge>
+            <span class="badge badge-sm bg-{{ $badgeColor }} text-{{ $badgeColor }}-fg ms-auto">
+                {{ $badge }}
+                <span class="visually-hidden">notificaciones</span>
+            </span>
         @endif
     </a>
 </li>
