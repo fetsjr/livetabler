@@ -1,33 +1,44 @@
+@props([
+    // id del contenedor del grafico (se genera si no se indica).
+    'id' => null,
+    // Tipo de grafico ApexCharts: line, area, bar, donut, pie, radialBar...
+    'type' => 'line',
+    // Alto del grafico en pixeles.
+    'height' => 350,
+    // Series de datos para ApexCharts.
+    'series' => [],
+    // Opciones extra de ApexCharts (se fusionan con las base).
+    'options' => [],
+])
+
 @php
-    $fluid = $fluid ?? false;
-    $id = $id ?? 'chart-' . Str::random(8);
-    $type = $type ?? 'line';
-    $height = $height ?? '350';
-    $options = $options ?? [];
+    // id efectivo del contenedor.
+    $chartId = $id ?? 'chart-'.\Illuminate\Support\Str::random(8);
 @endphp
 
-<div id="{{ $id }}" style="min-height: {{ $height }}px;" {{ $attributes }}></div>
+{{-- Contenedor del grafico. Fusiona clases del consumidor y fija id/alto minimo. --}}
+<div {{ $attributes->class([])->merge(['id' => $chartId, 'style' => 'min-height: '.((int) $height).'px;']) }}></div>
 
-                    type: "{{ $type }}",
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Solo inicializa si ApexCharts esta cargado en la pagina.
+        if (window.ApexCharts) {
+            var options = {
+                chart: {
+                    type: @js($type),
                     fontFamily: 'inherit',
-                    height: {{ $height }},
+                    height: {{ (int) $height }},
                     parentHeightOffset: 0,
-                    toolbar: {
-                        show: false,
-                    },
-                    animations: {
-                        enabled: true
-                    },
+                    toolbar: { show: false },
+                    animations: { enabled: true },
                 },
-                grid: {
-                    strokeDashArray: 4,
-                },
-                colors: ["#066fd1", "#d63939", "#2fb344", "#f59f00", "#4299e1"],
-                ...{!! json_encode($options) !!}
+                series: @js($series),
+                grid: { strokeDashArray: 4 },
+                colors: ['#066fd1', '#d63939', '#2fb344', '#f59f00', '#4299e1'],
+                ...@js($options)
             };
-
-            window.{{ Str::camel($id) }} = new ApexCharts(document.getElementById('{{ $id }}'), options);
-            window.{{ Str::camel($id) }}.render();
+            var chart = new ApexCharts(document.getElementById(@js($chartId)), options);
+            chart.render();
         }
     });
 </script>
