@@ -36,6 +36,25 @@ class SidebarItemsTest extends TestCase
             ->assertSee('nav-item active mb-2', false);
     }
 
+    public function test_item_disabled_anade_clase(): void
+    {
+        $this->blade('<x-tabler::sidebar.item href="/x" :disabled="true">X</x-tabler::sidebar.item>')
+            ->assertSee('nav-link disabled', false);
+    }
+
+    public function test_item_sin_href_no_emite_atributo_href(): void
+    {
+        $this->blade('<x-tabler::sidebar.item>X</x-tabler::sidebar.item>')
+            ->assertDontSee('href=', false);
+    }
+
+    public function test_item_badge_color_por_defecto(): void
+    {
+        // Sin badgeColor explicito, el color por defecto es 'red' (bg-red text-red-fg).
+        $this->blade('<x-tabler::sidebar.item badge="9">X</x-tabler::sidebar.item>')
+            ->assertSee('bg-red text-red-fg', false);
+    }
+
     // ---------------------------------------------------------------- group
 
     public function test_group_renderiza_li_con_sublista(): void
@@ -228,12 +247,40 @@ class SidebarItemsTest extends TestCase
             ->assertSee('dropdown-menu show', false);
     }
 
-    public function test_collapse_icono_y_ancla_por_id(): void
+    public function test_collapse_icono_y_aria_por_id(): void
     {
+        // El dropdown de Tabler se acopla por DOM (padre .dropdown / hermano .dropdown-menu),
+        // NO por ancla: el href es un placeholder. El id solo enlaza aria-controls.
         $this->blade('<x-tabler::sidebar.collapse heading="X" icon="package" id="menu-x">y</x-tabler::sidebar.collapse>')
             ->assertSee('ti-package', false)
-            ->assertSee('href="#menu-x"', false)
-            ->assertSee('id="menu-x"', false);
+            ->assertSee('href="#"', false)
+            ->assertSee('aria-controls="menu-x"', false)
+            ->assertSee('id="menu-x"', false)
+            ->assertDontSee('href="#menu-x"', false);
+    }
+
+    public function test_collapse_keep_open_por_defecto_es_outside(): void
+    {
+        // Por defecto Tabler usa data-bs-auto-close="outside" (autocierra al hacer clic fuera).
+        $this->blade('<x-tabler::sidebar.collapse heading="X" id="m-ac">y</x-tabler::sidebar.collapse>')
+            ->assertSee('data-bs-auto-close="outside"', false);
+    }
+
+    public function test_collapse_keep_open_fija_auto_close_false(): void
+    {
+        // keepOpen=true desactiva el autocierre (data-bs-auto-close="false").
+        $this->blade('<x-tabler::sidebar.collapse heading="X" id="m-ko" :keep-open="true">y</x-tabler::sidebar.collapse>')
+            ->assertSee('data-bs-auto-close="false"', false);
+    }
+
+    public function test_collapse_sin_id_genera_toggle_coherente(): void
+    {
+        // Sin id explicito el id se deriva del heading (estable, no aleatorio) y el href
+        // permanece como placeholder; el trigger sigue referenciando el menu via aria-controls.
+        $html = $this->blade('<x-tabler::sidebar.collapse heading="Mis Productos">y</x-tabler::sidebar.collapse>')->__toString();
+        $this->assertStringContainsString('href="#"', $html);
+        $this->assertStringContainsString('id="sidebar-submenu-mis-productos"', $html);
+        $this->assertStringContainsString('aria-controls="sidebar-submenu-mis-productos"', $html);
     }
 
     public function test_collapse_no_usa_alpine_ni_tailwind(): void
