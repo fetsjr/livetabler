@@ -51,4 +51,41 @@ class PopoverTest extends TestCase
         $this->blade('<x-tabler::popover class="custom">Contenido</x-tabler::popover>')
             ->assertSee('d-inline-block custom', false);
     }
+
+    public function test_el_panel_no_lleva_z_3(): void
+    {
+        // z-3 (z-index:3) ANULABA el z-index nativo de .popover (1070) y hundia el
+        // popover por debajo de modales/dropdowns. Tras el fix no debe emitirse z-3,
+        // pero el panel debe seguir teniendo la clase 'popover' (que aporta su z-index).
+        $this->blade('<x-tabler::popover>Contenido</x-tabler::popover>')
+            ->assertDontSee('z-3', false)
+            ->assertSee('popover', false);
+    }
+
+    public function test_clases_del_panel(): void
+    {
+        // El panel (raiz del bug de z-index) ahora si esta cubierto: posicion absoluta,
+        // role dialog y visibilidad Alpine.
+        $this->blade('<x-tabler::popover>Contenido</x-tabler::popover>')
+            ->assertSee('position-absolute', false)
+            ->assertSee('role="dialog"', false)
+            ->assertSee('x-show="open"', false);
+    }
+
+    public function test_position_top_emite_clases_de_posicion_del_panel(): void
+    {
+        // Con position="top" el panel se ancla arriba del disparador.
+        $this->blade('<x-tabler::popover position="top">Contenido</x-tabler::popover>')
+            ->assertSee('bottom-100 start-50 translate-middle-x mb-2', false);
+    }
+
+    public function test_el_trigger_es_accesible_por_teclado(): void
+    {
+        // El disparador role="button" debe ser enfocable (tabindex="0") y operable
+        // por teclado (Enter/Space abren el popover).
+        $this->blade('<x-tabler::popover><x-slot:trigger>Abrir</x-slot:trigger>Cuerpo</x-tabler::popover>')
+            ->assertSee('tabindex="0"', false)
+            ->assertSee('@keydown.enter.prevent="open = ! open"', false)
+            ->assertSee('@keydown.space.prevent="open = ! open"', false);
+    }
 }

@@ -39,7 +39,10 @@
     @isset($trigger)
         <div
             @click="open = ! open"
+            @keydown.enter.prevent="open = ! open"
+            @keydown.space.prevent="open = ! open"
             role="button"
+            tabindex="0"
             aria-haspopup="dialog"
             :aria-expanded="open.toString()"
         >
@@ -48,8 +51,10 @@
     @endisset
 
     {{-- Panel del popover: clases nativas de Tabler (popover, bs-popover-*, popover-arrow,
-         popover-body). z-3 es la utilidad z-index real mas alta de Tabler; la clase popover
-         ya aporta su propio z-index via su variable CSS. --}}
+         popover-body). La clase .popover ya aporta su propio z-index (1070) via variable CSS,
+         suficiente para quedar por encima de modales/dropdowns. NO anadir z-3: la utilidad
+         .z-3 (z-index:3) se genera DESPUES de .popover en el CSS y, con igual especificidad,
+         BAJARIA el z-index a 3 hundiendo el popover bajo cualquier overlay. --}}
     <div
         x-show="open"
         x-cloak
@@ -59,11 +64,12 @@
             $claseDireccion,
             $clasesPosicion,
             'position-absolute',
-            'z-3',
             'shadow',
         ])
         role="dialog"
     >
+        {{-- Sin Popper.js el arrow no queda perfectamente centrado respecto al disparador;
+             es una limitacion cosmetica aceptada (ver comentario del panel mas arriba). --}}
         <div class="popover-arrow"></div>
 
         {{-- Cabecera opcional del popover (slot con nombre header). --}}
