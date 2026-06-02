@@ -55,4 +55,25 @@ class SliderTest extends TestCase
         $this->blade('<x-tabler::slider class="mi-clase" />')
             ->assertSee('form-range mi-clase', false);
     }
+
+    public function test_wire_model_sin_modificador_usa_entangle(): void
+    {
+        // Con wire:model="x" el estado Alpine se entrelaza con Livewire via entangle.
+        // El apostrofe se escapa a &#039; por estar dentro del atributo HTML x-data.
+        $this->blade('<x-tabler::slider wire:model="volumen" />')
+            ->assertSee('$wire.entangle(&#039;volumen&#039;)', false)
+            ->assertDontSee('value: 50', false);
+    }
+
+    public function test_wire_model_con_modificador_live_usa_entangle(): void
+    {
+        // Con wire:model.live="vol" (modificador) la deteccion de name SI lo capta
+        // (whereStartsWith), por lo que la rama de entangle DEBE activarse con el mismo
+        // criterio: si no, Alpine se desincronizaria de Livewire. Verificamos que el
+        // x-data referencia entangle('vol') (apostrofe escapado a &#039; en el atributo)
+        // y NO el valor estatico de la prop.
+        $this->blade('<x-tabler::slider wire:model.live="vol" />')
+            ->assertSee('$wire.entangle(&#039;vol&#039;)', false)
+            ->assertDontSee('value: 50', false);
+    }
 }

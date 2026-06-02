@@ -29,11 +29,14 @@ class DatepickerTest extends TestCase
 
     public function test_script_inicializa_litepicker_con_id_y_formato(): void
     {
+        // El formato fluye al script via @js, que escapa de forma segura: las barras se
+        // emiten como \/ ('DD\/MM\/YYYY'). Asi un valor con apostrofe tampoco romperia el
+        // literal JS. Verificamos la forma escapada real.
         $this->blade('<x-tabler::datepicker name="fecha" id="dp-test" format="DD/MM/YYYY" />')
             ->assertSee('window.Litepicker', false)
             ->assertSee('new Litepicker', false)
             ->assertSee("getElementById('dp-test')", false)
-            ->assertSee("DD/MM/YYYY", false);
+            ->assertSee("format: 'DD\\/MM\\/YYYY'", false);
     }
 
     public function test_estado_invalido_con_error(): void

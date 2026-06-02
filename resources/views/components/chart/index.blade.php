@@ -35,7 +35,7 @@
                 series: @js($series),
                 grid: { strokeDashArray: 4 },
                 colors: ['#066fd1', '#d63939', '#2fb344', '#f59f00', '#4299e1'],
-                ...@js($options)
+                ...@js((object) $options)
             };
             var chart = new ApexCharts(document.getElementById(@js($chartId)), options);
             chart.render();

@@ -73,7 +73,7 @@
             if (window.Litepicker) {
                 new Litepicker({
                     element: document.getElementById('{{ $idEfectivo }}'),
-                    format: '{{ $format }}',
+                    format: @js($format),
                     ...{!! json_encode((object) $options) !!}
                 });
             }

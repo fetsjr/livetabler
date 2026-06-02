@@ -19,9 +19,12 @@
 
 @php
     // Expresion JS para inicializar el estado Alpine:
-    // - con wire:model -> se entrelaza con Livewire (entangle).
+    // - con wire:model (cualquier modificador: .live, .blur...) -> se entrelaza con Livewire
+    //   (entangle). Se usa $name (resuelto via whereStartsWith) para detectar la presencia del
+    //   binding, igual que el atributo name del input; asi entangle y el wire:model emitido se
+    //   deciden con el MISMO criterio y el estado Alpine no se desincroniza de Livewire.
     // - sin wire:model -> arranca desde la prop value, escapada de forma segura con Js::from.
-    $valorInicial = $attributes->has('wire:model')
+    $valorInicial = $name
         ? "\$wire.entangle('{$name}')"
         : \Illuminate\Support\Js::from($value)->toHtml();
 @endphp

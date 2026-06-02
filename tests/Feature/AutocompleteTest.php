@@ -29,11 +29,24 @@ class AutocompleteTest extends TestCase
 
     public function test_script_inicializa_tomselect_con_url_y_minchars(): void
     {
+        // La url fluye al script via @js, que la escapa de forma segura (las barras como \/)
+        // y la concatena con el query string. Asi una url con apostrofe no romperia el
+        // literal JS. Verificamos la forma escapada real.
         $this->blade('<x-tabler::autocomplete name="pais" url="/buscar" :min-chars="2" />')
             ->assertSee('window.TomSelect', false)
             ->assertSee('new TomSelect', false)
-            ->assertSee('/buscar?q=', false)
+            ->assertSee("var url = '\\/buscar' + '?q='", false)
             ->assertSee('query.length < 2', false);
+    }
+
+    public function test_escapa_url_con_apostrofe_en_el_script_js(): void
+    {
+        // Una url con apostrofe (url="/x'y") NO debe romper el literal JS: con @js el
+        // apostrofe se escapa a ' dentro de la cadena. Verificamos la forma segura
+        // y la ausencia del literal roto '/x'y'.
+        $this->blade('<x-tabler::autocomplete name="pais" :url="\'/x\\\'y\'" />')
+            ->assertSee("var url = '\\/x\\u0027y' + '?q='", false)
+            ->assertDontSee("var url = '/x'y'", false);
     }
 
     public function test_estado_invalido_con_error(): void

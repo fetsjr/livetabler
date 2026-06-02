@@ -42,14 +42,14 @@
     document.addEventListener("DOMContentLoaded", function () {
         if (typeof Dropzone !== 'undefined') {
             new Dropzone('#{{ $idEfectivo }}', {
-                url: '{{ $url }}',
-                paramName: '{{ $name }}',
+                url: @js($url),
+                paramName: @js($name),
                 maxFiles: {{ $maxFiles }},
-                acceptedFiles: '{{ $acceptedFiles }}',
+                acceptedFiles: @js($acceptedFiles),
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
                 },
-                dictDefaultMessage: '{{ $message }}',
+                dictDefaultMessage: @js($message),
                 dictMaxFilesExceeded: 'No puedes subir más archivos.',
                 dictInvalidFileType: 'Este tipo de archivo no está permitido.',
                 @verbatim

@@ -77,7 +77,7 @@
                     load: function (query, callback) {
                         if (query.length < {{ $minChars }}) return callback();
 
-                        var url = '{{ $url }}?q=' + encodeURIComponent(query);
+                        var url = @js($url) + '?q=' + encodeURIComponent(query);
                         fetch(url)
                             .then(response => response.json())
                             .then(json => {
